@@ -28,9 +28,9 @@ using namespace SlopeCraft;
 
 namespace SlopeCraft
 {
-const ColorList *const Basic4External=(ColorList *)BasicalRGBList4AiCvters();
-const ColorList *const Allowed4External=(ColorList *)AllowedRGBList4AiCvters();
-const MapList *const AllowedMapList4External=(MapList *)AllowedMapList4AiCvters();
+const ColorList *const Basic4External=reinterpret_cast<ColorList *>(BasicalRGBList4AiCvters());
+const ColorList *const Allowed4External=reinterpret_cast<ColorList *>(AllowedRGBList4AiCvters());
+const MapList *const AllowedMapList4External=reinterpret_cast<MapList *>(AllowedMapList4AiCvters());
 
 void * SCL_EXPORT AllowedRGBList4AiCvters() {
     return &TokiSlopeCraft::Allowed._RGB;
@@ -77,7 +77,7 @@ Kernel::Kernel() {
 }
 
 const char * Kernel::getSCLVersion() {
-    return "v3.7.0";
+    return "v3.8.0";
 }
 
 void Kernel::getColorMapPtrs(const float** f,const unsigned char** m,int* rows) {
@@ -116,6 +116,9 @@ unsigned long long Kernel::mcVersion2VersionNumber(gameVersion g) {
         return 2730;
     case gameVersion::MC18:
         return 2865;
+#warning The full version of MC1.19 has not been released yet. Remind to update the version number later.
+    case gameVersion::MC19:
+        return 3099;// 1.19-pre1
     default:
         return 1919810;
     }

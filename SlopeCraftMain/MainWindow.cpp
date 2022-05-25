@@ -23,7 +23,7 @@ This file is part of SlopeCraft.
 #include <QProcess>
 #include <QDebug>
 #include <QRgb>
-#include "./MainWindow.h"
+#include "MainWindow.h"
 
 const ushort MainWindow::BLCreative[64]={0,0,1,1,0,0,0,0,3,0,4,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 const ushort MainWindow::BLCheaper[64]={0,0,0,0,1,0,5,2,3,0,4,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
@@ -146,13 +146,16 @@ MainWindow::MainWindow(QWidget *parent)
             this,&MainWindow::onGameVerClicked);
     connect(ui->isGame18,&QRadioButton::toggled,
             this,&MainWindow::onGameVerClicked);
+    connect(ui->isGame19,&QRadioButton::toggled,
+            this,&MainWindow::onGameVerClicked);
 
     connect(ui->isMapCreative,&QRadioButton::toggled,
             this,&MainWindow::onMapTypeClicked);
     connect(ui->isMapSurvival,&QRadioButton::toggled,
             this,&MainWindow::onMapTypeClicked);
+    /*
     connect(ui->isMapWall,&QRadioButton::toggled,
-            this,&MainWindow::onMapTypeClicked);
+            this,&MainWindow::onMapTypeClicked);*/
     connect(ui->isMapFlat,&QRadioButton::toggled,
             this,&MainWindow::onMapTypeClicked);
 
@@ -254,70 +257,19 @@ void MainWindow::showPreview()
     tempE.resize(kernel->getImageRows(),kernel->getImageCols());
     short a,b;
     kernel->getConvertedImage(&a,&b,tempE.data());
-    //std::cerr<<__FILE__<<" , "<<__LINE__<<std::endl;
+    //cerr<<__FILE__<<" , "<<__LINE__<<endl;
     QImage temp=EImage2QImage(tempE);
-    //std::cerr<<__FILE__<<" , "<<__LINE__<<std::endl;
+    //cerr<<__FILE__<<" , "<<__LINE__<<endl;
     preWind->ShowMaterialList();
-    //std::cerr<<__FILE__<<" , "<<__LINE__<<std::endl;
+    //cerr<<__FILE__<<" , "<<__LINE__<<endl;
     preWind->showConvertedImage(temp);
-    //std::cerr<<__FILE__<<" , "<<__LINE__<<std::endl;
+    //cerr<<__FILE__<<" , "<<__LINE__<<endl;
     preWind->show();
-    //std::cerr<<__FILE__<<" , "<<__LINE__<<std::endl;
+    //cerr<<__FILE__<<" , "<<__LINE__<<endl;
 }
 
 void MainWindow::keepAwake(void*) {
     QCoreApplication::processEvents();
-}
-
-QByteArray MainWindow::parseColormap(QString FilePath_,
-                                     const QString & rawName,
-                                     const char * pattern) {
-    QByteArray dst;
-    QString title,text;
-    QString FilePath = FilePath_;
-        while(true) {
-            qDebug("225");
-            QFile temp(FilePath);
-            if(temp.exists()) {
-                temp.open(QFile::OpenModeFlag::ReadOnly);
-                dst=temp.readAll();
-
-                if(QCryptographicHash::hash(
-                            dst,QCryptographicHash::Algorithm::Md5).toHex()
-                    ==pattern) {
-                    break;
-                } else {
-                    //如果文件存在但校验失败
-                    title=tr("颜色表文件")+rawName+tr("被篡改");
-                    text=tr("这是程序运行所必须的文件，且绝对不允许篡改，请重新下载最新版的SlopeCraft，或者重新寻找它。");
-                }
-            } else {
-                //如果文件不存在
-                title=tr("颜色表文件")+rawName+tr("不存在");
-                text=tr("这是程序运行所必须的文件，请重新寻找");
-            }
-
-            int userChoice=QMessageBox::critical(this,title,text,QMessageBox::StandardButton::Retry,
-                                  QMessageBox::StandardButton::No);
-            if(userChoice==QMessageBox::StandardButton::Retry) {
-                FilePath=QFileDialog::getOpenFileName(this,
-                                            tr("颜色表文件")+rawName+tr("不存在或被篡改，请手动寻找")
-                                            ,"./Colors",rawName);
-                if(FilePath.isEmpty()) {
-                    qDebug("252");
-                    exit(0);
-                    return QByteArray();
-                } else {
-                    qDebug("255");
-                    continue;
-                }
-            } else {
-                qDebug("259");
-                exit(0);
-                return QByteArray();
-            }
-        }
-    return dst;
 }
 
 QJsonArray MainWindow::getFixedBlocksList(QString Path) {
@@ -605,7 +557,7 @@ tpS::~tpS() {
 void MainWindow::turnToPage(int page)
 {
     page%=9;
-    QString newtitle="SlopeCraft v3.7.0 Copyright © 2021-2022 TokiNoBug    ";
+    QString newtitle="SlopeCraft v3.8.0 Copyright © 2021-2022 TokiNoBug    ";
     switch (page)
     {
         case 0:
@@ -777,12 +729,13 @@ void MainWindow::on_StartWithNotVanilla_clicked() {
     onBlockListChanged();
     turnToPage(1);
 }
-
+/*
 void MainWindow::on_StartWithWall_clicked() {
     ui->isMapWall->setChecked(true);
     onBlockListChanged();
     turnToPage(1);
 }
+*/
 
 void MainWindow::preprocessImage(const QString & Path) {
 
@@ -971,6 +924,9 @@ void MainWindow::onGameVerClicked() {
     if(ui->isGame18->isChecked()) {
         Manager->setVersion(18);
     }
+    if(ui->isGame19->isChecked()) {
+        Manager->setVersion(19);
+    }
     kernel->decreaseStep(SlopeCraft::nothing);
     onBlockListChanged();
     updateEnables();
@@ -986,9 +942,10 @@ void MainWindow::onMapTypeClicked() {
     if(ui->isMapSurvival->isChecked()) {
         Manager->setEnabled(12,false);
     }
+    /*
     if(ui->isMapWall->isChecked()) {
         Manager->setEnabled(12,false);
-    }
+    }*/
     kernel->decreaseStep(SlopeCraft::nothing);
     onBlockListChanged();
     updateEnables();
@@ -1063,12 +1020,13 @@ void MainWindow::kernelSetType() {
         type=SlopeCraft::mapTypes::Flat;
     if(ui->isMapSurvival->isChecked())
         type=SlopeCraft::mapTypes::Slope;
+    /*
     if(ui->isMapWall->isChecked())
-        type=SlopeCraft::mapTypes::Wall;
+        type=SlopeCraft::mapTypes::Wall;*/
     }
 
 
-    SlopeCraft::gameVersion ver=SlopeCraft::gameVersion::MC17;
+    SlopeCraft::gameVersion ver=SlopeCraft::gameVersion::MC19;
     {
     if(ui->isGame12->isChecked())
         ver=SlopeCraft::gameVersion::MC12;
@@ -1082,6 +1040,8 @@ void MainWindow::kernelSetType() {
         ver=SlopeCraft::gameVersion::MC16;
     if(ui->isGame17->isChecked())
         ver=SlopeCraft::gameVersion::MC17;
+    if(ui->isGame18->isChecked())
+        ver=SlopeCraft::gameVersion::MC18;
     }
 
     bool allowedBaseColor[64];
@@ -1097,11 +1057,11 @@ void MainWindow::kernelSetType() {
     int colorN=0;
     SlopeCraft::Kernel::getColorMapPtrs(nullptr,&allowedMap,&colorN);
     /*
-    std::cout<<"\n\nAllowedMap=";
+    cout<<"\n\nAllowedMap=";
     for(int i=0;i<colorN;i++) {
-        std::cout<<int(allowedMap[i])<<" , ";
+        cout<<int(allowedMap[i])<<" , ";
     }
-    std::cout<<std::endl<<std::endl;
+    cout<<endl<<endl;
     */
     updateEnables();
 
@@ -1346,7 +1306,7 @@ void MainWindow::onExportLiteclicked(QString path) {
             return;
         }
         qDebug("开始导出投影");
-        std::cout<<FileName<<std::endl;
+        cout<<FileName<<endl;
 
 
         ui->FinishExLite->setEnabled(false);
@@ -1681,6 +1641,23 @@ void MainWindow::checkVersion() {
     return;
 }
 
+QJsonObject MainWindow::GithubAPIJson2Latest3xVer(const QJsonArray & ja) {
+    for(const auto & jvref : ja) {
+        const QJsonObject & jo=jvref.toObject();
+        const QString tagName=jo["tag_name"].toString();
+        qDebug().noquote().nospace()<<"tagName="<<tagName;
+        if(jo["prerelease"]==true)
+            continue;
+        if(jo["draft"]==true)
+            continue;
+        if(tagName.startsWith("v3.",Qt::CaseInsensitive)) {
+            qDebug()<<"chosen latest version : "<<tagName;
+            return jo;
+        }
+    }
+    return ja.first().toObject();
+}
+
 void MainWindow::grabVersion(bool isAuto) {
     static bool isRunning=false;
     if(isRunning) {
@@ -1688,7 +1665,7 @@ void MainWindow::grabVersion(bool isAuto) {
     }
     isRunning=true;
 
-    static const QString url="https://api.github.com/repos/TokiNoBug/SlopeCraft/releases/latest";
+    static const QString url="https://api.github.com/repos/TokiNoBug/SlopeCraft/releases";
 
     QEventLoop tempLoop;
     QNetworkAccessManager * manager=new QNetworkAccessManager;
@@ -1724,9 +1701,9 @@ void MainWindow::grabVersion(bool isAuto) {
     }
 
 
-    QJsonObject jo=jd.object();
+    QJsonArray ja=jd.array();
 
-    bool hasKey=jo.contains("tag_name");
+    bool hasKey=ja.first().toObject().contains("tag_name");
     if(!hasKey) {
         QMessageBox::StandardButton userReply=
                 QMessageBox::information(this,
@@ -1744,7 +1721,7 @@ void MainWindow::grabVersion(bool isAuto) {
         return;
     }
 
-    bool isKeyString=jo.value("tag_name").isString();
+    bool isKeyString=ja.first().toObject().value("tag_name").isString();
     if(!isKeyString) {
         QMessageBox::StandardButton userReply=
                 QMessageBox::information(this,
@@ -1762,9 +1739,11 @@ void MainWindow::grabVersion(bool isAuto) {
         return;
     }
 
-    QString updateInfo=jo["body"].toString();
+    QJsonObject latest3xJo=GithubAPIJson2Latest3xVer(ja);
 
-    QString latestVersion=jo["tag_name"].toString();
+    QString updateInfo=latest3xJo["body"].toString();
+
+    QString latestVersion=latest3xJo["tag_name"].toString();
     if(latestVersion==selfVersion) {
         if(!isAuto)
         QMessageBox::information(this,
@@ -1799,11 +1778,13 @@ void MainWindow::grabVersion(bool isAuto) {
 
         if(userReply==VersionDialog::userChoice::Yes) {
             QDesktopServices::openUrl(
-                        QUrl("https://github.com/ToKiNoBug/SlopeCraft/releases/latest"));
+                        QUrl(latest3xJo["url"].toString()));
+            /*
             if(trans.language()=="zh_CN") {
                 QDesktopServices::openUrl(
                             QUrl("https://gitee.com/TokiNoBug/SlopeCraft/releases"));
             }
+            */
         }
         if(userReply==VersionDialog::userChoice::NoToAll) {
             setAutoCheckUpdate(false);
@@ -1975,18 +1956,19 @@ void MainWindow::testBlockList() {
                targetName.toLocal8Bit().data(),
                unCompressed);
     if(strlen(unCompressed)<=0) {
-        //std::cerr<<"Success"<<std::endl;
+        //cerr<<"Success"<<endl;
         return;
     }
 
     qDebug()<<"File="<<__FILE__<<" , Line="<<__LINE__;
-    std::cerr<<"Compress success\n";
-
+    cerr<<"Compress success\n";
+    /*
     QFile tempFile(QString::fromLocal8Bit(unCompressed));
     if(tempFile.exists()&&!tempFile.remove()) {
-        std::cerr<<"Failed to remove temporary file."<<std::endl;
+        cerr<<"Failed to remove temporary file."<<endl;
         return;
     }
     qDebug()<<"File="<<__FILE__<<" , Line="<<__LINE__;
-    std::cerr<<"Succeeded to remove temporary file\n";
+    cerr<<"Succeeded to remove temporary file\n"<<tempFile.fileName().toLocal8Bit().data();
+    */
 }

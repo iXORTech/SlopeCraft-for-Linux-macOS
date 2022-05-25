@@ -217,7 +217,7 @@ private slots:
 
     void on_reportBugs_clicked();
 
-    void on_StartWithWall_clicked();
+    //void on_StartWithWall_clicked();
 
     void on_ExImage_clicked();
 
@@ -267,7 +267,6 @@ private:
     void kernelSetType();
     void kernelSetImg();
 
-    QByteArray parseColormap(QString,const QString &,const char*);
     QJsonArray getFixedBlocksList(QString);
     QString getFixedBlockListDir(QString);
     QJsonArray getCustomBlockList(QString);
@@ -285,6 +284,8 @@ private:
 
     static void algoProgressRangeSet(void*,int min,int max,int val);
     static void algoProgressAdd(void*,int deltaVal);
+
+    static QJsonObject GithubAPIJson2Latest3xVer(const QJsonArray &);
 
 };
 
