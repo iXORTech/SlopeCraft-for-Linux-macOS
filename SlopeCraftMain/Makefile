@@ -920,6 +920,10 @@ qmake: FORCE
 
 qmake_all: FORCE
 
+SlopeCraft.app/Contents/MacOS/Blocks:
+	@mkdir -p SlopeCraft.app/Contents/MacOS/Blocks
+	@${COPY_DIR} ../Blocks SlopeCraft.app/Contents/MacOS
+
 SlopeCraft.app/Contents/PkgInfo: 
 	@test -d SlopeCraft.app/Contents || mkdir -p SlopeCraft.app/Contents
 	@$(DEL_FILE) SlopeCraft.app/Contents/PkgInfo
@@ -938,6 +942,7 @@ SlopeCraft.app/Contents/Resources/SlopeCraft.icns: others/SlopeCraft.icns
 	@$(COPY_FILE) others/SlopeCraft.icns SlopeCraft.app/Contents/Resources/SlopeCraft.icns
 
 all: Makefile \
+		SlopeCraft.app/Contents/MacOS/Blocks \
 		SlopeCraft.app/Contents/PkgInfo \
 		SlopeCraft.app/Contents/Resources/empty.lproj \
 		SlopeCraft.app/Contents/Info.plist \
