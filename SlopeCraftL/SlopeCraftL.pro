@@ -4,10 +4,32 @@ CONFIG -= qt
 #Use this line when in with-qt mode
 #CONFIG += qt core gui concurrent
 
-INCLUDEPATH += \
-                               D:/CppLibs/eigen-3.4.0 \
-                               ../AiCvterInterface \
-                               D:\CppLibs\HeuristicFlow-1.5.0
+include('../common.pri')
+
+#INCLUDEPATH += \
+#                               ../AiCvterInterface \
+#
+#                               D:\CppLibs\HeuristicFlow-1.5.0
+
+CONFIG += staticlib
+
+unix {
+    INCLUDEPATH += \
+                    ../AiCvterInterface \
+                    $$HEURISTIC_FLOW_INCLUDE
+    CONFIG += link_pkgconfig create_pc
+    PKGCONFIG += zlib eigen3
+}
+
+win32 {
+    INCLUDEPATH += \
+                ../AiCvterInterface \
+                $$ZLIB_INCLUDE \
+                $$EIGEN_INCLUDE \
+                $$HEURISTIC_FLOW_INCLUDE
+}
+
+DESTDIR = $$COMMON_LIB_DIR
 
 RC_LANG = 0x0004
 
@@ -33,7 +55,10 @@ DEFINES += SLOPECRAFTL_LIBRARY
 
 CONFIG += std::c++17
 
-LIBS += D:\CppLibs\zlib\lib\libzlibstatic.a
+LIBS += -lz
+
+#LIBS += D:\CppLibs\zlib\lib\libzlibstatic.a
+#LIBS += -lz
 
 #Comment following lines if you compile without AiConverter
 #LIBS += D:\Git\build-SlopeCraft-Desktop_Qt_6_1_0_MinGW_64_bit-Release\SlopeCraftL\release\AiCvterLib3.dll

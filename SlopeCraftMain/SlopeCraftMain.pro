@@ -1,3 +1,5 @@
+include("../common.pri")
+
 QT       += core gui concurrent network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -25,10 +27,19 @@ QMAKE_TARGET_COPYRIGHT = TokiNoBug
 QMAKE_TARGET_PRODUCT = SlopeCraft
 #产品名称
 
+INCLUDEPATH += \
+                ../SlopeCraftL \
+                ../BlockListManager
 
-INCLUDEPATH += D:\CppLibs\eigen-3.4.0 \
-                               ../SlopeCraftL \
-                               ../BlockListManager
+win32 {
+    INCLUDEPATH += \
+                $$EIGEN_INCLUDE
+}
+
+unix {
+    CONFIG += link_pkgconfig
+    PKGCONFIG += eigen3
+}
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -88,4 +99,7 @@ DISTFILES += \
 #    ../Kernel/Kernel.pro
 
 
-LIBS += D:\Git\build-SlopeCraft-Desktop_Qt_6_1_0_MinGW_64_bit-Release\SlopeCraftL\release\SlopeCraftL3.dll
+# LIBS += D:\Git\build-SlopeCraft-Desktop_Qt_6_1_0_MinGW_64_bit-Release\SlopeCraftL\release\SlopeCraftL3.dll
+unix {
+    LIBS += $$COMMON_LIB_DIR/libSlopeCraftL.a -lz -fopenmp
+}

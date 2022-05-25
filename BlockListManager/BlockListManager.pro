@@ -1,3 +1,5 @@
+include("../common.pri")
+
 QT += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -7,6 +9,8 @@ DEFINES += BLOCKLISTMANAGER_LIBRARY
 
 CONFIG += c++17
 CONFIG += staticlib
+
+DESTDIR = $$COMMON_LIB_DIR
 
 INCLUDEPATH += ../SlopeCraftL
 
@@ -28,7 +32,10 @@ HEADERS += \
 TRANSLATIONS += \
     BlockListManager_zh_CN.ts
 
-LIBS += D:\Git\build-SlopeCraft-Desktop_Qt_6_2_1_MinGW_64_bit-Release\SlopeCraftL\release\SlopeCraftL3.dll
+# LIBS += D:\Git\build-SlopeCraft-Desktop_Qt_6_2_1_MinGW_64_bit-Release\SlopeCraftL\release\SlopeCraftL3.dll
+unix {
+    LIBS += $$COMMON_LIB_DIR/libSlopeCraftL.a -fopenmp
+}
 
 # Default rules for deployment.
 #unix {
