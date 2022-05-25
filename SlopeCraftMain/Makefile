@@ -941,7 +941,8 @@ all: Makefile \
 		SlopeCraft.app/Contents/PkgInfo \
 		SlopeCraft.app/Contents/Resources/empty.lproj \
 		SlopeCraft.app/Contents/Info.plist \
-		SlopeCraft.app/Contents/Resources/SlopeCraft.icns SlopeCraft.app/Contents/MacOS/SlopeCraft
+		SlopeCraft.app/Contents/Resources/SlopeCraft.icns \
+		SlopeCraft.app/Contents/MacOS/SlopeCraft
 
 dist: distdir FORCE
 	(cd `dirname $(DISTDIR)` && $(TAR) $(DISTNAME).tar $(DISTNAME) && $(COMPRESS) $(DISTNAME).tar) && $(MOVE) `dirname $(DISTDIR)`/$(DISTNAME).tar.gz . && $(DEL_FILE) -r $(DISTDIR)

@@ -9,6 +9,7 @@ CONFIG += c++17
 
 TARGET = SlopeCraft
 
+ICON = others/SlopeCraft.icns
 RC_ICONS = others/SlopeCraft.ico
 
 RC_LANG = 0x0004
