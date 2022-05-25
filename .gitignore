@@ -17,3 +17,21 @@ AiCvterInterface/AiCvterLib_global.h
 *.a
 *.dll
 *.qm
+
+# Build
+moc_*
+qrc_*
+ui_*
+*.o
+
+Info.plist
+PkgInfo
+empty.lproj
+
+imageCutter
+SlopeCraft
+
+SlopeCraftMain/SlopeCraft.app
+
+# macOS File System
+.DS_Store
