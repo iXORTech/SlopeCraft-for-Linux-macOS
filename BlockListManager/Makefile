@@ -16,7 +16,7 @@ CC            = /usr/local/Cellar/gcc/11.3.0_1/bin/gcc-11
 CXX           = /usr/local/Cellar/gcc/11.3.0_1/bin/g++-11
 DEFINES       = -DBLOCKLISTMANAGER_LIBRARY -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 -fPIC $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -mmacosx-version-min=10.14 -Wall -Wextra $(DEFINES)
-CXXFLAGS      = -pipe -O2 -fPIC -std=gnu++1z $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -mmacosx-version-min=10.14 -Wall -Wextra $(DEFINES)
+CXXFLAGS      = -pipe -fpermissive -O2 -fPIC -std=gnu++1z $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -mmacosx-version-min=10.14 -Wall -Wextra $(DEFINES)
 INCPATH       = -I. -I../SlopeCraftL -I/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers -I/Users/cubik65536/Qt/6.2.4/macos/lib/QtGui.framework/Headers -I/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/AGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/AGL.framework/Headers -I/Users/cubik65536/Qt/6.2.4/macos/mkspecs/macx-g++ -F/Users/cubik65536/Qt/6.2.4/macos/lib
 QMAKE         = /Users/cubik65536/Qt/6.2.4/macos/bin/qmake
 DEL_FILE      = rm -f
@@ -286,6 +286,7 @@ DIST          = /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/spec_pre.prf \
 		/Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/mac/toolchain.prf \
 		/Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/default_pre.prf \
 		/Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/mac/default_pre.prf \
+		../common.pri \
 		/Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/resolve_config.prf \
 		/Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/default_post.prf \
 		/Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/mac/default_post.prf \
@@ -314,7 +315,7 @@ DIST          = /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/spec_pre.prf \
 		TokiBaseColor.cpp \
 		TokiBlock.cpp
 QMAKE_TARGET  = BlockListManager
-DESTDIR       = 
+DESTDIR       = ../lib/
 TARGET        = libBlockListManager.a
 
 ####### Custom Variables
@@ -328,12 +329,13 @@ EXPORT__PRO_FILE_ = /Volumes/Software Development/SlopeCraft-for-macOS/BlockList
 first: all
 ####### Build rules
 
-staticlib: $(TARGET)
+staticlib: ../lib/$(TARGET)
 
-libBlockListManager.a:  $(OBJECTS) $(OBJCOMP) 
-	-$(DEL_FILE) $(TARGET)
+../lib/libBlockListManager.a:  $(OBJECTS) $(OBJCOMP) 
+	@test -d ../lib/ || mkdir -p ../lib/
+	-$(DEL_FILE) ../lib/$(TARGET)
 	$(AR) $(DESTDIR)$(TARGET) $(OBJECTS)
-	$(RANLIB) $(TARGET)
+	$(RANLIB) ../lib/$(TARGET)
 
 
 Makefile: BlockListManager.pro /Users/cubik65536/Qt/6.2.4/macos/mkspecs/macx-g++/qmake.conf /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/spec_pre.prf \
@@ -562,6 +564,7 @@ Makefile: BlockListManager.pro /Users/cubik65536/Qt/6.2.4/macos/mkspecs/macx-g++
 		/Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/mac/toolchain.prf \
 		/Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/default_pre.prf \
 		/Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/mac/default_pre.prf \
+		../common.pri \
 		/Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/resolve_config.prf \
 		/Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/default_post.prf \
 		/Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/mac/default_post.prf \
@@ -814,6 +817,7 @@ Makefile: BlockListManager.pro /Users/cubik65536/Qt/6.2.4/macos/mkspecs/macx-g++
 /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/mac/toolchain.prf:
 /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/default_pre.prf:
 /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/mac/default_pre.prf:
+../common.pri:
 /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/resolve_config.prf:
 /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/default_post.prf:
 /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/mac/default_post.prf:
@@ -845,7 +849,7 @@ qmake: FORCE
 qmake_all: FORCE
 
 
-all: Makefile libBlockListManager.a
+all: Makefile ../lib/libBlockListManager.a
 
 dist: distdir FORCE
 	(cd `dirname $(DISTDIR)` && $(TAR) $(DISTNAME).tar $(DISTNAME) && $(COMPRESS) $(DISTNAME).tar) && $(MOVE) `dirname $(DISTDIR)`/$(DISTNAME).tar.gz . && $(DEL_FILE) -r $(DISTDIR)
@@ -864,7 +868,7 @@ clean: compiler_clean
 
 
 distclean: clean 
-	-$(DEL_FILE) $(TARGET) 
+	-$(DEL_FILE) ../lib/$(TARGET) 
 	-$(DEL_FILE) .qmake.stash
 	-$(DEL_FILE) Makefile
 
