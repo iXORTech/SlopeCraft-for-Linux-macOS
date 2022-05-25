@@ -98,7 +98,7 @@ Kernel * Kernel::create() {
 }
 
 
-uint64_t Kernel::mcVersion2VersionNumber(gameVersion g) {
+unsigned long long Kernel::mcVersion2VersionNumber(gameVersion g) {
     switch (g) {
     case gameVersion::ANCIENT:
         return 114514;

@@ -160,31 +160,48 @@ void crash()
     return;
 }
 
-#define bufferSize 2048
-bool compressFile(const char *sourcePath, const char *destPath)
-{
-    char buf[bufferSize] = {0};
-    FILE *in = nullptr;
-    gzFile out = nullptr;
-    int len = 0;
-    fopen_s(&in, sourcePath, "rb");
-    out = gzopen(destPath, "wb");
-    if (in == nullptr || out == nullptr)
+// #define bufferSize 2048
+// bool compressFile(const char *sourcePath, const char *destPath)
+// {
+//     char buf[bufferSize] = {0};
+//     FILE *in = nullptr;
+//     gzFile out = nullptr;
+//     int len = 0;
+//     fopen_s(&in, sourcePath, "rb");
+//     out = gzopen(destPath, "wb");
+//     if (in == nullptr || out == nullptr)
+//         return false;
+//     while (true)
+//     {
+//         len = (int)fread(buf, 1, sizeof(buf), in);
+//         if (ferror(in))
+//             return false;
+//         if (len == 0)
+//             break;
+//         if (len != gzwrite(out, buf, (unsigned)len))
+//             return false;
+//         memset(buf, 0, sizeof(buf));
+//     }
+//     fclose(in);
+//     gzclose(out);
+//     // succeed
+//     return true;
+// }
+
+bool compressFile(const char *inputPath, const char *outputPath) {
+    const size_t BUFFER_SIZE = 2048;
+    std::ifstream fin;
+    fin.open(inputPath, std::ifstream::binary | std::ifstream::in);
+    if (!fin)
         return false;
-    while (true)
-    {
-        len = (int)fread(buf, 1, sizeof(buf), in);
-        if (ferror(in))
-            return false;
-        if (len == 0)
-            break;
-        if (len != gzwrite(out, buf, (unsigned)len))
-            return false;
-        memset(buf, 0, sizeof(buf));
+    std::vector<char> buffer (BUFFER_SIZE, 0);
+    gzFile fout = gzopen(outputPath, "wb");
+    while (!fin.eof()) {
+        fin.read(buffer.data(), buffer.size());
+        std::streamsize s = fin.gcount();
+        gzwrite(fout, buffer.data(), s);
     }
-    fclose(in);
-    gzclose(out);
-    // succeed
+    gzclose(fout);
     return true;
 }
 

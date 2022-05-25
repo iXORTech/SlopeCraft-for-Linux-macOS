@@ -25,7 +25,7 @@ This file is part of SlopeCraft.
 #define heu_NO_OUTPUT
 #define heu_USE_THREADS
 
-#include <HeuristicFlow/Genetic>
+#include "HeuristicFlow/Genetic"
 
 
 const uint8_t mutateMap[3][2]={{1,2},{0,2},{0,1}};

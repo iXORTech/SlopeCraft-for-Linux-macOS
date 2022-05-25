@@ -24,7 +24,7 @@ This file is part of SlopeCraft.
 #define TPSTRATEGYWIND_H
 
 #include <QMainWindow>
-#include"mainwindow.h"
+#include "MainWindow.h"
 namespace Ui {
 class tpStrategyWind;
 }

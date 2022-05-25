@@ -269,11 +269,12 @@ void MainWindow::keepAwake(void*) {
     QCoreApplication::processEvents();
 }
 
-QByteArray MainWindow::parseColormap(QString FilePath,
+QByteArray MainWindow::parseColormap(QString FilePath_,
                                      const QString & rawName,
                                      const char * pattern) {
     QByteArray dst;
     QString title,text;
+    QString FilePath = FilePath_;
         while(true) {
             qDebug("225");
             QFile temp(FilePath);
