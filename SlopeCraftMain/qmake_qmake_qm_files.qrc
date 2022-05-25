@@ -1,0 +1,6 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="i18n">
+<file alias="SlopeCraft_zh_CN.qm">/Volumes/Software Development/SlopeCraft-for-macOS/SlopeCraftMain/.qm/SlopeCraft_zh_CN.qm</file>
+<file alias="SlopeCraft_en_US.qm">/Volumes/Software Development/SlopeCraft-for-macOS/SlopeCraftMain/.qm/SlopeCraft_en_US.qm</file>
+</qresource>
+</RCC>
