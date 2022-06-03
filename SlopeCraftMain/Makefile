@@ -36,8 +36,8 @@ DEL_DIR       = rmdir
 MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
-DISTNAME      = SlopeCraft3.8.0.0
-DISTDIR = /Volumes/Software\ Development/SlopeCraft-for-macOS/SlopeCraftMain/.tmp/SlopeCraft3.8.0.0
+DISTNAME      = SlopeCraft3.8.1.0
+DISTDIR = /Volumes/Software\ Development/SlopeCraft-for-macOS/SlopeCraftMain/.tmp/SlopeCraft3.8.1.0
 LINK          = /usr/local/Cellar/gcc/11.3.0_1/bin/g++-11
 LFLAGS        = -headerpad_max_install_names $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -mmacosx-version-min=10.14 -Wl,-rpath,@executable_path/../Frameworks -Wl,-rpath,/Users/cubik65536/Qt/6.2.4/macos/lib
 LIBS          = $(SUBLIBS) -F/Users/cubik65536/Qt/6.2.4/macos/lib ../lib/libSlopeCraftL.a -lz -fopenmp -framework QtWidgets -framework QtGui -framework AppKit -framework ImageIO -framework Metal -framework QtConcurrent -framework QtNetwork -framework QtCore -framework DiskArbitration -framework IOKit -framework AGL -framework OpenGL   
@@ -935,7 +935,7 @@ SlopeCraft.app/Contents/Resources/empty.lproj:
 SlopeCraft.app/Contents/Info.plist: 
 	@test -d SlopeCraft.app/Contents || mkdir -p SlopeCraft.app/Contents
 	@$(DEL_FILE) SlopeCraft.app/Contents/Info.plist
-	@sed -e "s,@SHORT_VERSION@,3.8,g" -e "s,\$${QMAKE_SHORT_VERSION},3.8,g" -e "s,@FULL_VERSION@,3.8.0,g" -e "s,\$${QMAKE_FULL_VERSION},3.8.0,g" -e "s,@TYPEINFO@,????,g" -e "s,\$${QMAKE_PKGINFO_TYPEINFO},????,g" -e "s,@BUNDLEIDENTIFIER@,com.yourcompany.SlopeCraft,g" -e "s,\$${PRODUCT_BUNDLE_IDENTIFIER},com.yourcompany.SlopeCraft,g" -e "s,\$${MACOSX_DEPLOYMENT_TARGET},10.14,g" -e "s,\$${IPHONEOS_DEPLOYMENT_TARGET},,g" -e "s,\$${TVOS_DEPLOYMENT_TARGET},,g" -e "s,\$${WATCHOS_DEPLOYMENT_TARGET},,g" -e "s,\$${IOS_LAUNCH_SCREEN},LaunchScreen,g" -e "s,@ICON@,SlopeCraft.icns,g" -e "s,\$${ASSETCATALOG_COMPILER_APPICON_NAME},SlopeCraft.icns,g" -e "s,@EXECUTABLE@,SlopeCraft,g" -e "s,@LIBRARY@,SlopeCraft,g" -e "s,\$${EXECUTABLE_NAME},SlopeCraft,g" -e "s,@TYPEINFO@,????,g" -e "s,\$${QMAKE_PKGINFO_TYPEINFO},????,g" /Users/cubik65536/Qt/6.2.4/macos/mkspecs/macx-g++/Info.plist.app >SlopeCraft.app/Contents/Info.plist
+	@sed -e "s,@SHORT_VERSION@,3.8,g" -e "s,\$${QMAKE_SHORT_VERSION},3.8,g" -e "s,@FULL_VERSION@,3.8.1,g" -e "s,\$${QMAKE_FULL_VERSION},3.8.1,g" -e "s,@TYPEINFO@,????,g" -e "s,\$${QMAKE_PKGINFO_TYPEINFO},????,g" -e "s,@BUNDLEIDENTIFIER@,com.yourcompany.SlopeCraft,g" -e "s,\$${PRODUCT_BUNDLE_IDENTIFIER},com.yourcompany.SlopeCraft,g" -e "s,\$${MACOSX_DEPLOYMENT_TARGET},10.14,g" -e "s,\$${IPHONEOS_DEPLOYMENT_TARGET},,g" -e "s,\$${TVOS_DEPLOYMENT_TARGET},,g" -e "s,\$${WATCHOS_DEPLOYMENT_TARGET},,g" -e "s,\$${IOS_LAUNCH_SCREEN},LaunchScreen,g" -e "s,@ICON@,SlopeCraft.icns,g" -e "s,\$${ASSETCATALOG_COMPILER_APPICON_NAME},SlopeCraft.icns,g" -e "s,@EXECUTABLE@,SlopeCraft,g" -e "s,@LIBRARY@,SlopeCraft,g" -e "s,\$${EXECUTABLE_NAME},SlopeCraft,g" -e "s,@TYPEINFO@,????,g" -e "s,\$${QMAKE_PKGINFO_TYPEINFO},????,g" /Users/cubik65536/Qt/6.2.4/macos/mkspecs/macx-g++/Info.plist.app >SlopeCraft.app/Contents/Info.plist
 SlopeCraft.app/Contents/Resources/SlopeCraft.icns: others/SlopeCraft.icns
 	@test -d SlopeCraft.app/Contents/Resources/ || mkdir -p SlopeCraft.app/Contents/Resources/
 	@$(DEL_FILE) SlopeCraft.app/Contents/Resources/SlopeCraft.icns
