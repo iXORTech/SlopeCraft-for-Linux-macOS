@@ -37,15 +37,9 @@ unix {
     LIBS += $$COMMON_LIB_DIR/libSlopeCraftL.a -fopenmp
 }
 
-# Default rules for deployment.
-#unix {
-#    target.path = /usr/lib
-#}
-#!isEmpty(target.path): INSTALLS += target
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/SlopeCraftL/release/ -lSlopeCraftL
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/SlopeCraftL/debug/ -lSlopeCraftL
+else:unix: LIBS += -L$$OUT_PWD/SlopeCraftL/ -lSlopeCraftL
 
-#win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../Kernel/release/ -lKernel
-#else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../Kernel/debug/ -lKernel
-#else:unix: LIBS += -L$$OUT_PWD/../Kernel/ -lKernel
-
-#INCLUDEPATH += $$PWD/../Kernel
-#DEPENDPATH += $$PWD/../Kernel
+INCLUDEPATH += $$PWD/../SlopeCraftL
+DEPENDPATH += $$PWD/../SlopeCraftL

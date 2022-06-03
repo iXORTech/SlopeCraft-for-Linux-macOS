@@ -1,8 +1,5 @@
-#Use this line when in non-qt mode
 CONFIG -= qt
 
-#Use this line when in with-qt mode
-#CONFIG += qt core gui concurrent
 
 include('../common.pri')
 
@@ -33,7 +30,7 @@ DESTDIR = $$COMMON_LIB_DIR
 
 RC_LANG = 0x0004
 
-VERSION += 3.8.0.0
+VERSION += 3.8.1.0
 
 QMAKE_TARGET_DESCRIPTION = SlopeCraft Library# (with AiConverter)
 #描述信息
@@ -53,7 +50,7 @@ LIBS += -fopenmp
 TEMPLATE = lib
 DEFINES += SLOPECRAFTL_LIBRARY
 
-CONFIG += std::c++17
+CONFIG += c++17
 
 LIBS += -lz
 
@@ -100,7 +97,9 @@ HEADERS += \
     SlopeCraftL_global.h
 
 # Default rules for deployment.
-unix {
-    target.path = /usr/lib
-}
-!isEmpty(target.path): INSTALLS += target
+#unix {
+#    target.path = /usr/lib
+#}
+#!isEmpty(target.path): INSTALLS += target
+
+

@@ -557,7 +557,7 @@ tpS::~tpS() {
 void MainWindow::turnToPage(int page)
 {
     page%=9;
-    QString newtitle="SlopeCraft v3.8.0 Copyright © 2021-2022 TokiNoBug    ";
+    QString newtitle="SlopeCraft v3.8.1 Copyright © 2021-2022 TokiNoBug    ";
     switch (page)
     {
         case 0:
@@ -1042,6 +1042,8 @@ void MainWindow::kernelSetType() {
         ver=SlopeCraft::gameVersion::MC17;
     if(ui->isGame18->isChecked())
         ver=SlopeCraft::gameVersion::MC18;
+    if(ui->isGame19->isChecked())
+        ver=SlopeCraft::gameVersion::MC19;
     }
 
     bool allowedBaseColor[64];

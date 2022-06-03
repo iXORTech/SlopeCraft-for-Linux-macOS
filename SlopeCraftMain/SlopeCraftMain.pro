@@ -14,7 +14,7 @@ RC_ICONS = others/SlopeCraft.ico
 
 RC_LANG = 0x0004
 
-VERSION += 3.8.0.0
+VERSION += 3.8.1.0
 
 #QMAKE_TARGET_COMPANY = TokiNoBug
 #公司名称
@@ -47,9 +47,6 @@ unix {
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000
 
 SOURCES += \
-    ../BlockListManager/BlockListManager.cpp \
-    ../BlockListManager/TokiBaseColor.cpp \
-    ../BlockListManager/TokiBlock.cpp \
     AiCvterParameterDialog.cpp \
     BatchUi.cpp \
     TaskBox.cpp \
@@ -60,11 +57,6 @@ SOURCES += \
     tpstrategywind.cpp
 
 HEADERS += \
-    ../BlockListManager/BlockListManager.h \
-    ../BlockListManager/TokiBaseColor.h \
-    ../BlockListManager/TokiBlock.h \
-    ../SlopeCraftL/SlopeCraftL.h \
-    ../SlopeCraftL/SlopeCraftL_global.h \
     AiCvterParameterDialog.h \
     BatchUi.h \
     TaskBox.h \
@@ -96,8 +88,8 @@ RESOURCES += \
 DISTFILES += \
     others/SlopeCraft.ico
 
-#SUBDIRS += \
-#    ../Kernel/Kernel.pro
+
+#LIBS += D:\Git\build-SlopeCraft-Desktop_Qt_6_1_0_MinGW_64_bit-Release\SlopeCraftL\release\SlopeCraftL3.dll
 
 
 # LIBS += D:\Git\build-SlopeCraft-Desktop_Qt_6_1_0_MinGW_64_bit-Release\SlopeCraftL\release\SlopeCraftL3.dll
