@@ -17,7 +17,7 @@ CXX           = /usr/local/Cellar/gcc/11.3.0_1/bin/g++-11
 DEFINES       = -DBLOCKLISTMANAGER_LIBRARY -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 -fPIC $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -mmacosx-version-min=10.14 -Wall -Wextra $(DEFINES)
 CXXFLAGS      = -pipe -fpermissive -O2 -fPIC -std=gnu++1z $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -mmacosx-version-min=10.14 -Wall -Wextra $(DEFINES)
-INCPATH       = -I. -I../SlopeCraftL -I/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers -I/Users/cubik65536/Qt/6.2.4/macos/lib/QtGui.framework/Headers -I/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/AGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/AGL.framework/Headers -I/Users/cubik65536/Qt/6.2.4/macos/mkspecs/macx-g++ -F/Users/cubik65536/Qt/6.2.4/macos/lib
+INCPATH       = -I. -I../SlopeCraftL -I../SlopeCraftL -I/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers -I/Users/cubik65536/Qt/6.2.4/macos/lib/QtGui.framework/Headers -I/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/AGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/AGL.framework/Headers -I/Users/cubik65536/Qt/6.2.4/macos/mkspecs/macx-g++ -F/Users/cubik65536/Qt/6.2.4/macos/lib
 QMAKE         = /Users/cubik65536/Qt/6.2.4/macos/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -900,6 +900,19 @@ moc_BlockListManager.cpp: BlockListManager.h \
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/qboxlayout.h \
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers/QJsonArray \
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers/qjsonarray.h \
+		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/QRadioButton \
+		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/qradiobutton.h \
+		../SlopeCraftL/SlopeCraftL.h \
+		../SlopeCraftL/SlopeCraftL_global.h \
+		TokiBlock.h \
+		/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers/QString \
+		/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers/qstring.h \
+		/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers/QJsonObject \
+		/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers/qjsonobject.h \
+		/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers/QFile \
+		/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers/qfile.h \
+		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/QMessageBox \
+		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/qmessagebox.h \
 		TokiBaseColor.h \
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/QLabel \
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/qlabel.h \
@@ -909,21 +922,8 @@ moc_BlockListManager.cpp: BlockListManager.h \
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/qlayoutitem.h \
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/QCheckBox \
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/qcheckbox.h \
-		TokiBlock.h \
-		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/QRadioButton \
-		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/qradiobutton.h \
-		/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers/QString \
-		/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers/qstring.h \
-		/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers/QJsonObject \
-		/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers/qjsonobject.h \
-		/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers/QFile \
-		/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers/qfile.h \
-		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/QMessageBox \
-		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/qmessagebox.h \
-		../SlopeCraftL/SlopeCraftL.h \
-		../SlopeCraftL/SlopeCraftL_global.h \
 		/Users/cubik65536/Qt/6.2.4/macos/libexec/moc
-	/Users/cubik65536/Qt/6.2.4/macos/libexec/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -D__cplusplus=199711L -D__APPLE_CC__=6000 -D__clang__ -D__clang_major__=13 -D__clang_minor__=1 -D__clang_patchlevel__=6 -D__GNUC__=4 -D__GNUC_MINOR__=2 -D__GNUC_PATCHLEVEL__=1 -I/Users/cubik65536/Qt/6.2.4/macos/mkspecs/macx-g++ -I'/Volumes/Software Development/SlopeCraft-for-macOS/BlockListManager' -I'/Volumes/Software Development/SlopeCraft-for-macOS/SlopeCraftL' -I/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers -I/Users/cubik65536/Qt/6.2.4/macos/lib/QtGui.framework/Headers -I/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers -I/usr/local/Cellar/gcc/11.3.0_1/include/c++/11 -I/usr/local/Cellar/gcc/11.3.0_1/include/c++/11/x86_64-apple-darwin21 -I/usr/local/Cellar/gcc/11.3.0_1/include/c++/11/backward -I/usr/local/Cellar/gcc/11.3.0_1/lib/gcc/11/gcc/x86_64-apple-darwin21/11/include -I/usr/local/Cellar/gcc/11.3.0_1/lib/gcc/11/gcc/x86_64-apple-darwin21/11/include-fixed -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -F/Users/cubik65536/Qt/6.2.4/macos/lib BlockListManager.h -o moc_BlockListManager.cpp
+	/Users/cubik65536/Qt/6.2.4/macos/libexec/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -D__cplusplus=199711L -D__APPLE_CC__=6000 -D__clang__ -D__clang_major__=13 -D__clang_minor__=1 -D__clang_patchlevel__=6 -D__GNUC__=4 -D__GNUC_MINOR__=2 -D__GNUC_PATCHLEVEL__=1 -I/Users/cubik65536/Qt/6.2.4/macos/mkspecs/macx-g++ -I'/Volumes/Software Development/SlopeCraft-for-macOS/BlockListManager' -I'/Volumes/Software Development/SlopeCraft-for-macOS/SlopeCraftL' -I'/Volumes/Software Development/SlopeCraft-for-macOS/SlopeCraftL' -I/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers -I/Users/cubik65536/Qt/6.2.4/macos/lib/QtGui.framework/Headers -I/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers -I/usr/local/Cellar/gcc/11.3.0_1/include/c++/11 -I/usr/local/Cellar/gcc/11.3.0_1/include/c++/11/x86_64-apple-darwin21 -I/usr/local/Cellar/gcc/11.3.0_1/include/c++/11/backward -I/usr/local/Cellar/gcc/11.3.0_1/lib/gcc/11/gcc/x86_64-apple-darwin21/11/include -I/usr/local/Cellar/gcc/11.3.0_1/lib/gcc/11/gcc/x86_64-apple-darwin21/11/include-fixed -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -F/Users/cubik65536/Qt/6.2.4/macos/lib BlockListManager.h -o moc_BlockListManager.cpp
 
 moc_TokiBaseColor.cpp: TokiBaseColor.h \
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers/QObject \
@@ -950,7 +950,7 @@ moc_TokiBaseColor.cpp: TokiBaseColor.h \
 		../SlopeCraftL/SlopeCraftL.h \
 		../SlopeCraftL/SlopeCraftL_global.h \
 		/Users/cubik65536/Qt/6.2.4/macos/libexec/moc
-	/Users/cubik65536/Qt/6.2.4/macos/libexec/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -D__cplusplus=199711L -D__APPLE_CC__=6000 -D__clang__ -D__clang_major__=13 -D__clang_minor__=1 -D__clang_patchlevel__=6 -D__GNUC__=4 -D__GNUC_MINOR__=2 -D__GNUC_PATCHLEVEL__=1 -I/Users/cubik65536/Qt/6.2.4/macos/mkspecs/macx-g++ -I'/Volumes/Software Development/SlopeCraft-for-macOS/BlockListManager' -I'/Volumes/Software Development/SlopeCraft-for-macOS/SlopeCraftL' -I/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers -I/Users/cubik65536/Qt/6.2.4/macos/lib/QtGui.framework/Headers -I/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers -I/usr/local/Cellar/gcc/11.3.0_1/include/c++/11 -I/usr/local/Cellar/gcc/11.3.0_1/include/c++/11/x86_64-apple-darwin21 -I/usr/local/Cellar/gcc/11.3.0_1/include/c++/11/backward -I/usr/local/Cellar/gcc/11.3.0_1/lib/gcc/11/gcc/x86_64-apple-darwin21/11/include -I/usr/local/Cellar/gcc/11.3.0_1/lib/gcc/11/gcc/x86_64-apple-darwin21/11/include-fixed -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -F/Users/cubik65536/Qt/6.2.4/macos/lib TokiBaseColor.h -o moc_TokiBaseColor.cpp
+	/Users/cubik65536/Qt/6.2.4/macos/libexec/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -D__cplusplus=199711L -D__APPLE_CC__=6000 -D__clang__ -D__clang_major__=13 -D__clang_minor__=1 -D__clang_patchlevel__=6 -D__GNUC__=4 -D__GNUC_MINOR__=2 -D__GNUC_PATCHLEVEL__=1 -I/Users/cubik65536/Qt/6.2.4/macos/mkspecs/macx-g++ -I'/Volumes/Software Development/SlopeCraft-for-macOS/BlockListManager' -I'/Volumes/Software Development/SlopeCraft-for-macOS/SlopeCraftL' -I'/Volumes/Software Development/SlopeCraft-for-macOS/SlopeCraftL' -I/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers -I/Users/cubik65536/Qt/6.2.4/macos/lib/QtGui.framework/Headers -I/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers -I/usr/local/Cellar/gcc/11.3.0_1/include/c++/11 -I/usr/local/Cellar/gcc/11.3.0_1/include/c++/11/x86_64-apple-darwin21 -I/usr/local/Cellar/gcc/11.3.0_1/include/c++/11/backward -I/usr/local/Cellar/gcc/11.3.0_1/lib/gcc/11/gcc/x86_64-apple-darwin21/11/include -I/usr/local/Cellar/gcc/11.3.0_1/lib/gcc/11/gcc/x86_64-apple-darwin21/11/include-fixed -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -F/Users/cubik65536/Qt/6.2.4/macos/lib TokiBaseColor.h -o moc_TokiBaseColor.cpp
 
 moc_TokiBlock.cpp: TokiBlock.h \
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers/QObject \
@@ -968,7 +968,7 @@ moc_TokiBlock.cpp: TokiBlock.h \
 		../SlopeCraftL/SlopeCraftL.h \
 		../SlopeCraftL/SlopeCraftL_global.h \
 		/Users/cubik65536/Qt/6.2.4/macos/libexec/moc
-	/Users/cubik65536/Qt/6.2.4/macos/libexec/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -D__cplusplus=199711L -D__APPLE_CC__=6000 -D__clang__ -D__clang_major__=13 -D__clang_minor__=1 -D__clang_patchlevel__=6 -D__GNUC__=4 -D__GNUC_MINOR__=2 -D__GNUC_PATCHLEVEL__=1 -I/Users/cubik65536/Qt/6.2.4/macos/mkspecs/macx-g++ -I'/Volumes/Software Development/SlopeCraft-for-macOS/BlockListManager' -I'/Volumes/Software Development/SlopeCraft-for-macOS/SlopeCraftL' -I/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers -I/Users/cubik65536/Qt/6.2.4/macos/lib/QtGui.framework/Headers -I/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers -I/usr/local/Cellar/gcc/11.3.0_1/include/c++/11 -I/usr/local/Cellar/gcc/11.3.0_1/include/c++/11/x86_64-apple-darwin21 -I/usr/local/Cellar/gcc/11.3.0_1/include/c++/11/backward -I/usr/local/Cellar/gcc/11.3.0_1/lib/gcc/11/gcc/x86_64-apple-darwin21/11/include -I/usr/local/Cellar/gcc/11.3.0_1/lib/gcc/11/gcc/x86_64-apple-darwin21/11/include-fixed -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -F/Users/cubik65536/Qt/6.2.4/macos/lib TokiBlock.h -o moc_TokiBlock.cpp
+	/Users/cubik65536/Qt/6.2.4/macos/libexec/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -D__cplusplus=199711L -D__APPLE_CC__=6000 -D__clang__ -D__clang_major__=13 -D__clang_minor__=1 -D__clang_patchlevel__=6 -D__GNUC__=4 -D__GNUC_MINOR__=2 -D__GNUC_PATCHLEVEL__=1 -I/Users/cubik65536/Qt/6.2.4/macos/mkspecs/macx-g++ -I'/Volumes/Software Development/SlopeCraft-for-macOS/BlockListManager' -I'/Volumes/Software Development/SlopeCraft-for-macOS/SlopeCraftL' -I'/Volumes/Software Development/SlopeCraft-for-macOS/SlopeCraftL' -I/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers -I/Users/cubik65536/Qt/6.2.4/macos/lib/QtGui.framework/Headers -I/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers -I/usr/local/Cellar/gcc/11.3.0_1/include/c++/11 -I/usr/local/Cellar/gcc/11.3.0_1/include/c++/11/x86_64-apple-darwin21 -I/usr/local/Cellar/gcc/11.3.0_1/include/c++/11/backward -I/usr/local/Cellar/gcc/11.3.0_1/lib/gcc/11/gcc/x86_64-apple-darwin21/11/include -I/usr/local/Cellar/gcc/11.3.0_1/lib/gcc/11/gcc/x86_64-apple-darwin21/11/include-fixed -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -F/Users/cubik65536/Qt/6.2.4/macos/lib TokiBlock.h -o moc_TokiBlock.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -988,7 +988,9 @@ compiler_clean: compiler_moc_header_clean
 
 ####### Compile
 
-BlockListManager.o: BlockListManager.cpp BlockListManager.h \
+BlockListManager.o: BlockListManager.cpp /Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers/QJsonDocument \
+		/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers/qjsondocument.h \
+		BlockListManager.h \
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers/QObject \
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers/qobject.h \
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/QGroupBox \
@@ -997,18 +999,11 @@ BlockListManager.o: BlockListManager.cpp BlockListManager.h \
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/qboxlayout.h \
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers/QJsonArray \
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers/qjsonarray.h \
-		TokiBaseColor.h \
-		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/QLabel \
-		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/qlabel.h \
-		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/QGridLayout \
-		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/qgridlayout.h \
-		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/QSpacerItem \
-		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/qlayoutitem.h \
-		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/QCheckBox \
-		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/qcheckbox.h \
-		TokiBlock.h \
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/QRadioButton \
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/qradiobutton.h \
+		../SlopeCraftL/SlopeCraftL.h \
+		../SlopeCraftL/SlopeCraftL_global.h \
+		TokiBlock.h \
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers/QString \
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers/qstring.h \
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers/QJsonObject \
@@ -1017,10 +1012,15 @@ BlockListManager.o: BlockListManager.cpp BlockListManager.h \
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers/qfile.h \
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/QMessageBox \
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/qmessagebox.h \
-		../SlopeCraftL/SlopeCraftL.h \
-		../SlopeCraftL/SlopeCraftL_global.h \
-		/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers/QJsonDocument \
-		/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers/qjsondocument.h
+		TokiBaseColor.h \
+		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/QLabel \
+		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/qlabel.h \
+		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/QGridLayout \
+		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/qgridlayout.h \
+		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/QSpacerItem \
+		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/qlayoutitem.h \
+		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/QCheckBox \
+		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/qcheckbox.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o BlockListManager.o BlockListManager.cpp
 
 TokiBaseColor.o: TokiBaseColor.cpp TokiBaseColor.h \

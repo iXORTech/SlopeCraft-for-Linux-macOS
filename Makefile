@@ -32,8 +32,8 @@ COMPRESS      = gzip -9f
 DISTNAME      = SlopeCraft1.0.0
 DISTDIR = /Volumes/Software\ Development/SlopeCraft-for-macOS/.tmp/SlopeCraft1.0.0
 SUBTARGETS    =  \
-		sub-BlockListManager \
 		sub-SlopeCraftL \
+		sub-BlockListManager \
 		sub-SlopeCraftMain \
 		sub-imageCutter
 
@@ -45,31 +45,6 @@ EXPORT_ARCHS = $(filter $(EXPORT_VALID_ARCHS), $(if $(ARCHS), $(ARCHS), $(if $(E
 EXPORT_ARCH_ARGS = $(foreach arch, $(if $(EXPORT_ARCHS), $(EXPORT_ARCHS), $(EXPORT_VALID_ARCHS)), -arch $(arch))
 EXPORT__PRO_FILE_ = /Volumes/Software Development/SlopeCraft-for-macOS/SlopeCraft.pro
 
-sub-BlockListManager-qmake_all:  FORCE
-	@test -d BlockListManager/ || mkdir -p BlockListManager/
-	cd BlockListManager/ && $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/BlockListManager/BlockListManager.pro -spec macx-g++
-	cd BlockListManager/ && $(MAKE) -f Makefile qmake_all
-sub-BlockListManager: FORCE
-	@test -d BlockListManager/ || mkdir -p BlockListManager/
-	cd BlockListManager/ && ( test -e Makefile || $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/BlockListManager/BlockListManager.pro -spec macx-g++ ) && $(MAKE) -f Makefile
-sub-BlockListManager-make_first: FORCE
-	@test -d BlockListManager/ || mkdir -p BlockListManager/
-	cd BlockListManager/ && ( test -e Makefile || $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/BlockListManager/BlockListManager.pro -spec macx-g++ ) && $(MAKE) -f Makefile 
-sub-BlockListManager-all: FORCE
-	@test -d BlockListManager/ || mkdir -p BlockListManager/
-	cd BlockListManager/ && ( test -e Makefile || $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/BlockListManager/BlockListManager.pro -spec macx-g++ ) && $(MAKE) -f Makefile all
-sub-BlockListManager-clean: FORCE
-	@test -d BlockListManager/ || mkdir -p BlockListManager/
-	cd BlockListManager/ && ( test -e Makefile || $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/BlockListManager/BlockListManager.pro -spec macx-g++ ) && $(MAKE) -f Makefile clean
-sub-BlockListManager-distclean: FORCE
-	@test -d BlockListManager/ || mkdir -p BlockListManager/
-	cd BlockListManager/ && ( test -e Makefile || $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/BlockListManager/BlockListManager.pro -spec macx-g++ ) && $(MAKE) -f Makefile distclean
-sub-BlockListManager-install_subtargets: FORCE
-	@test -d BlockListManager/ || mkdir -p BlockListManager/
-	cd BlockListManager/ && ( test -e Makefile || $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/BlockListManager/BlockListManager.pro -spec macx-g++ ) && $(MAKE) -f Makefile install
-sub-BlockListManager-uninstall_subtargets: FORCE
-	@test -d BlockListManager/ || mkdir -p BlockListManager/
-	cd BlockListManager/ && ( test -e Makefile || $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/BlockListManager/BlockListManager.pro -spec macx-g++ ) && $(MAKE) -f Makefile uninstall
 sub-SlopeCraftL-qmake_all:  FORCE
 	@test -d SlopeCraftL/ || mkdir -p SlopeCraftL/
 	cd SlopeCraftL/ && $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/SlopeCraftL/SlopeCraftL.pro -spec macx-g++
@@ -95,29 +70,55 @@ sub-SlopeCraftL-install_subtargets: FORCE
 sub-SlopeCraftL-uninstall_subtargets: FORCE
 	@test -d SlopeCraftL/ || mkdir -p SlopeCraftL/
 	cd SlopeCraftL/ && ( test -e Makefile || $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/SlopeCraftL/SlopeCraftL.pro -spec macx-g++ ) && $(MAKE) -f Makefile uninstall
-sub-SlopeCraftMain-qmake_all:  FORCE
+sub-BlockListManager-qmake_all: sub-SlopeCraftL-qmake_all FORCE
+	@test -d BlockListManager/ || mkdir -p BlockListManager/
+	cd BlockListManager/ && $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/BlockListManager/BlockListManager.pro -spec macx-g++
+	cd BlockListManager/ && $(MAKE) -f Makefile qmake_all
+sub-BlockListManager: sub-SlopeCraftL FORCE
+	@test -d BlockListManager/ || mkdir -p BlockListManager/
+	cd BlockListManager/ && ( test -e Makefile || $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/BlockListManager/BlockListManager.pro -spec macx-g++ ) && $(MAKE) -f Makefile
+sub-BlockListManager-make_first: sub-SlopeCraftL-make_first FORCE
+	@test -d BlockListManager/ || mkdir -p BlockListManager/
+	cd BlockListManager/ && ( test -e Makefile || $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/BlockListManager/BlockListManager.pro -spec macx-g++ ) && $(MAKE) -f Makefile 
+sub-BlockListManager-all: sub-SlopeCraftL-all FORCE
+	@test -d BlockListManager/ || mkdir -p BlockListManager/
+	cd BlockListManager/ && ( test -e Makefile || $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/BlockListManager/BlockListManager.pro -spec macx-g++ ) && $(MAKE) -f Makefile all
+sub-BlockListManager-clean: sub-SlopeCraftL-clean FORCE
+	@test -d BlockListManager/ || mkdir -p BlockListManager/
+	cd BlockListManager/ && ( test -e Makefile || $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/BlockListManager/BlockListManager.pro -spec macx-g++ ) && $(MAKE) -f Makefile clean
+sub-BlockListManager-distclean: sub-SlopeCraftL-distclean FORCE
+	@test -d BlockListManager/ || mkdir -p BlockListManager/
+	cd BlockListManager/ && ( test -e Makefile || $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/BlockListManager/BlockListManager.pro -spec macx-g++ ) && $(MAKE) -f Makefile distclean
+sub-BlockListManager-install_subtargets: sub-SlopeCraftL-install_subtargets FORCE
+	@test -d BlockListManager/ || mkdir -p BlockListManager/
+	cd BlockListManager/ && ( test -e Makefile || $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/BlockListManager/BlockListManager.pro -spec macx-g++ ) && $(MAKE) -f Makefile install
+sub-BlockListManager-uninstall_subtargets: sub-SlopeCraftL-uninstall_subtargets FORCE
+	@test -d BlockListManager/ || mkdir -p BlockListManager/
+	cd BlockListManager/ && ( test -e Makefile || $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/BlockListManager/BlockListManager.pro -spec macx-g++ ) && $(MAKE) -f Makefile uninstall
+sub-SlopeCraftMain-qmake_all: sub-BlockListManager-qmake_all sub-SlopeCraftL-qmake_all FORCE
 	@test -d SlopeCraftMain/ || mkdir -p SlopeCraftMain/
 	cd SlopeCraftMain/ && $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/SlopeCraftMain/SlopeCraftMain.pro -spec macx-g++
 	cd SlopeCraftMain/ && $(MAKE) -f Makefile qmake_all
-sub-SlopeCraftMain: FORCE
+sub-SlopeCraftMain: sub-BlockListManager \
+		sub-SlopeCraftL FORCE
 	@test -d SlopeCraftMain/ || mkdir -p SlopeCraftMain/
 	cd SlopeCraftMain/ && ( test -e Makefile || $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/SlopeCraftMain/SlopeCraftMain.pro -spec macx-g++ ) && $(MAKE) -f Makefile
-sub-SlopeCraftMain-make_first: FORCE
+sub-SlopeCraftMain-make_first: sub-BlockListManager-make_first sub-SlopeCraftL-make_first FORCE
 	@test -d SlopeCraftMain/ || mkdir -p SlopeCraftMain/
 	cd SlopeCraftMain/ && ( test -e Makefile || $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/SlopeCraftMain/SlopeCraftMain.pro -spec macx-g++ ) && $(MAKE) -f Makefile 
-sub-SlopeCraftMain-all: FORCE
+sub-SlopeCraftMain-all: sub-BlockListManager-all sub-SlopeCraftL-all FORCE
 	@test -d SlopeCraftMain/ || mkdir -p SlopeCraftMain/
 	cd SlopeCraftMain/ && ( test -e Makefile || $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/SlopeCraftMain/SlopeCraftMain.pro -spec macx-g++ ) && $(MAKE) -f Makefile all
-sub-SlopeCraftMain-clean: FORCE
+sub-SlopeCraftMain-clean: sub-BlockListManager-clean sub-SlopeCraftL-clean FORCE
 	@test -d SlopeCraftMain/ || mkdir -p SlopeCraftMain/
 	cd SlopeCraftMain/ && ( test -e Makefile || $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/SlopeCraftMain/SlopeCraftMain.pro -spec macx-g++ ) && $(MAKE) -f Makefile clean
-sub-SlopeCraftMain-distclean: FORCE
+sub-SlopeCraftMain-distclean: sub-BlockListManager-distclean sub-SlopeCraftL-distclean FORCE
 	@test -d SlopeCraftMain/ || mkdir -p SlopeCraftMain/
 	cd SlopeCraftMain/ && ( test -e Makefile || $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/SlopeCraftMain/SlopeCraftMain.pro -spec macx-g++ ) && $(MAKE) -f Makefile distclean
-sub-SlopeCraftMain-install_subtargets: FORCE
+sub-SlopeCraftMain-install_subtargets: sub-BlockListManager-install_subtargets sub-SlopeCraftL-install_subtargets FORCE
 	@test -d SlopeCraftMain/ || mkdir -p SlopeCraftMain/
 	cd SlopeCraftMain/ && ( test -e Makefile || $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/SlopeCraftMain/SlopeCraftMain.pro -spec macx-g++ ) && $(MAKE) -f Makefile install
-sub-SlopeCraftMain-uninstall_subtargets: FORCE
+sub-SlopeCraftMain-uninstall_subtargets: sub-BlockListManager-uninstall_subtargets sub-SlopeCraftL-uninstall_subtargets FORCE
 	@test -d SlopeCraftMain/ || mkdir -p SlopeCraftMain/
 	cd SlopeCraftMain/ && ( test -e Makefile || $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/SlopeCraftMain/SlopeCraftMain.pro -spec macx-g++ ) && $(MAKE) -f Makefile uninstall
 sub-imageCutter-qmake_all:  FORCE
@@ -632,47 +633,47 @@ SlopeCraft.pro:
 qmake: FORCE
 	@$(QMAKE) -o Makefile SlopeCraft.pro -spec macx-g++
 
-qmake_all: sub-BlockListManager-qmake_all sub-SlopeCraftL-qmake_all sub-SlopeCraftMain-qmake_all sub-imageCutter-qmake_all FORCE
+qmake_all: sub-SlopeCraftL-qmake_all sub-BlockListManager-qmake_all sub-SlopeCraftMain-qmake_all sub-imageCutter-qmake_all FORCE
 
-make_first: sub-BlockListManager-make_first sub-SlopeCraftL-make_first sub-SlopeCraftMain-make_first sub-imageCutter-make_first  FORCE
-all: sub-BlockListManager-all sub-SlopeCraftL-all sub-SlopeCraftMain-all sub-imageCutter-all  FORCE
-clean: sub-BlockListManager-clean sub-SlopeCraftL-clean sub-SlopeCraftMain-clean sub-imageCutter-clean  FORCE
-distclean: sub-BlockListManager-distclean sub-SlopeCraftL-distclean sub-SlopeCraftMain-distclean sub-imageCutter-distclean  FORCE
+make_first: sub-SlopeCraftL-make_first sub-BlockListManager-make_first sub-SlopeCraftMain-make_first sub-imageCutter-make_first  FORCE
+all: sub-SlopeCraftL-all sub-BlockListManager-all sub-SlopeCraftMain-all sub-imageCutter-all  FORCE
+clean: sub-SlopeCraftL-clean sub-BlockListManager-clean sub-SlopeCraftMain-clean sub-imageCutter-clean  FORCE
+distclean: sub-SlopeCraftL-distclean sub-BlockListManager-distclean sub-SlopeCraftMain-distclean sub-imageCutter-distclean  FORCE
 	-$(DEL_FILE) Makefile
 	-$(DEL_FILE) .qmake.stash
-install_subtargets: sub-BlockListManager-install_subtargets sub-SlopeCraftL-install_subtargets sub-SlopeCraftMain-install_subtargets sub-imageCutter-install_subtargets FORCE
-uninstall_subtargets: sub-BlockListManager-uninstall_subtargets sub-SlopeCraftL-uninstall_subtargets sub-SlopeCraftMain-uninstall_subtargets sub-imageCutter-uninstall_subtargets FORCE
+install_subtargets: sub-SlopeCraftL-install_subtargets sub-BlockListManager-install_subtargets sub-SlopeCraftMain-install_subtargets sub-imageCutter-install_subtargets FORCE
+uninstall_subtargets: sub-SlopeCraftL-uninstall_subtargets sub-BlockListManager-uninstall_subtargets sub-SlopeCraftMain-uninstall_subtargets sub-imageCutter-uninstall_subtargets FORCE
 
 xcodeproj:
 	@$(QMAKE) -spec macx-xcode "$(EXPORT__PRO_FILE_)" -spec macx-g++
 
-sub-BlockListManager-check:
-	@test -d BlockListManager/ || mkdir -p BlockListManager/
-	cd BlockListManager/ && ( test -e Makefile || $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/BlockListManager/BlockListManager.pro -spec macx-g++ ) && $(MAKE) -f Makefile check
 sub-SlopeCraftL-check:
 	@test -d SlopeCraftL/ || mkdir -p SlopeCraftL/
 	cd SlopeCraftL/ && ( test -e Makefile || $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/SlopeCraftL/SlopeCraftL.pro -spec macx-g++ ) && $(MAKE) -f Makefile check
-sub-SlopeCraftMain-check:
+sub-BlockListManager-check: sub-SlopeCraftL-check
+	@test -d BlockListManager/ || mkdir -p BlockListManager/
+	cd BlockListManager/ && ( test -e Makefile || $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/BlockListManager/BlockListManager.pro -spec macx-g++ ) && $(MAKE) -f Makefile check
+sub-SlopeCraftMain-check: sub-BlockListManager-check sub-SlopeCraftL-check
 	@test -d SlopeCraftMain/ || mkdir -p SlopeCraftMain/
 	cd SlopeCraftMain/ && ( test -e Makefile || $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/SlopeCraftMain/SlopeCraftMain.pro -spec macx-g++ ) && $(MAKE) -f Makefile check
 sub-imageCutter-check:
 	@test -d imageCutter/ || mkdir -p imageCutter/
 	cd imageCutter/ && ( test -e Makefile || $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/imageCutter/imageCutter.pro -spec macx-g++ ) && $(MAKE) -f Makefile check
-check: sub-BlockListManager-check sub-SlopeCraftL-check sub-SlopeCraftMain-check sub-imageCutter-check
+check: sub-SlopeCraftL-check sub-BlockListManager-check sub-SlopeCraftMain-check sub-imageCutter-check
 
-sub-BlockListManager-benchmark:
-	@test -d BlockListManager/ || mkdir -p BlockListManager/
-	cd BlockListManager/ && ( test -e Makefile || $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/BlockListManager/BlockListManager.pro -spec macx-g++ ) && $(MAKE) -f Makefile benchmark
 sub-SlopeCraftL-benchmark:
 	@test -d SlopeCraftL/ || mkdir -p SlopeCraftL/
 	cd SlopeCraftL/ && ( test -e Makefile || $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/SlopeCraftL/SlopeCraftL.pro -spec macx-g++ ) && $(MAKE) -f Makefile benchmark
-sub-SlopeCraftMain-benchmark:
+sub-BlockListManager-benchmark: sub-SlopeCraftL-benchmark
+	@test -d BlockListManager/ || mkdir -p BlockListManager/
+	cd BlockListManager/ && ( test -e Makefile || $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/BlockListManager/BlockListManager.pro -spec macx-g++ ) && $(MAKE) -f Makefile benchmark
+sub-SlopeCraftMain-benchmark: sub-BlockListManager-benchmark sub-SlopeCraftL-benchmark
 	@test -d SlopeCraftMain/ || mkdir -p SlopeCraftMain/
 	cd SlopeCraftMain/ && ( test -e Makefile || $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/SlopeCraftMain/SlopeCraftMain.pro -spec macx-g++ ) && $(MAKE) -f Makefile benchmark
 sub-imageCutter-benchmark:
 	@test -d imageCutter/ || mkdir -p imageCutter/
 	cd imageCutter/ && ( test -e Makefile || $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/imageCutter/imageCutter.pro -spec macx-g++ ) && $(MAKE) -f Makefile benchmark
-benchmark: sub-BlockListManager-benchmark sub-SlopeCraftL-benchmark sub-SlopeCraftMain-benchmark sub-imageCutter-benchmark
+benchmark: sub-SlopeCraftL-benchmark sub-BlockListManager-benchmark sub-SlopeCraftMain-benchmark sub-imageCutter-benchmark
 install:install_subtargets  FORCE
 
 uninstall: uninstall_subtargets FORCE
@@ -682,17 +683,17 @@ FORCE:
 dist: distdir FORCE
 	(cd `dirname $(DISTDIR)` && $(TAR) $(DISTNAME).tar $(DISTNAME) && $(COMPRESS) $(DISTNAME).tar) && $(MOVE) `dirname $(DISTDIR)`/$(DISTNAME).tar.gz . && $(DEL_FILE) -r $(DISTDIR)
 
-distdir: sub-BlockListManager-distdir sub-SlopeCraftL-distdir sub-SlopeCraftMain-distdir sub-imageCutter-distdir FORCE
+distdir: sub-SlopeCraftL-distdir sub-BlockListManager-distdir sub-SlopeCraftMain-distdir sub-imageCutter-distdir FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/spec_pre.prf /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/device_config.prf /Users/cubik65536/Qt/6.2.4/macos/mkspecs/common/unix.conf /Users/cubik65536/Qt/6.2.4/macos/mkspecs/common/mac.conf /Users/cubik65536/Qt/6.2.4/macos/mkspecs/common/macx.conf /Users/cubik65536/Qt/6.2.4/macos/mkspecs/common/sanitize.conf /Users/cubik65536/Qt/6.2.4/macos/mkspecs/common/gcc-base.conf /Users/cubik65536/Qt/6.2.4/macos/mkspecs/common/gcc-base-mac.conf /Users/cubik65536/Qt/6.2.4/macos/mkspecs/common/g++-base.conf /Users/cubik65536/Qt/6.2.4/macos/mkspecs/common/g++-macx.conf /Users/cubik65536/Qt/6.2.4/macos/mkspecs/qconfig.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_ext_freetype.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_ext_libpng.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_3danimation.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_3danimation_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_3dcore.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_3dcore_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_3dextras.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_3dextras_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_3dinput.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_3dinput_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_3dlogic.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_3dlogic_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_3dquick.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_3dquick_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_3dquickanimation.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_3dquickanimation_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_3dquickextras.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_3dquickextras_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_3dquickinput.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_3dquickinput_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_3dquickrender.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_3dquickrender_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_3dquickscene2d.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_3dquickscene2d_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_3drender.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_3drender_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_bluetooth.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_bluetooth_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_bodymovin_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_charts.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_charts_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_chartsqml.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_chartsqml_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_concurrent.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_concurrent_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_core.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_core_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_datavisualization.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_datavisualization_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_dbus.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_dbus_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_designer.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_designer_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_designercomponents_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_devicediscovery_support_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_fb_support_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_gui.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_gui_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_help.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_help_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_labsanimation.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_labsanimation_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_labsfolderlistmodel.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_labsfolderlistmodel_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_labsqmlmodels.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_labsqmlmodels_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_labssettings.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_labssettings_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_labssharedimage.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_labssharedimage_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_labswavefrontmesh.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_labswavefrontmesh_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_linguist.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_linguist_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_multimedia.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_multimedia_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_multimediaquick_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_multimediawidgets.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_multimediawidgets_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_network.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_network_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_networkauth.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_networkauth_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_nfc.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_nfc_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_opengl.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_opengl_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_openglwidgets.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_openglwidgets_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_packetprotocol_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_positioning.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_positioning_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_positioningquick.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_positioningquick_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_printsupport.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_printsupport_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_qml.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_qml_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_qmlcompiler_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_qmlcore.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_qmlcore_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_qmldebug_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_qmldevtools_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_qmldom_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_qmllocalstorage.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_qmllocalstorage_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_qmlmodels.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_qmlmodels_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_qmltest.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_qmltest_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_qmlworkerscript.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_qmlworkerscript_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_qmlxmllistmodel.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_qmlxmllistmodel_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quick.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quick3d.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quick3d_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quick3dassetimport.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quick3dassetimport_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quick3dassetutils.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quick3dassetutils_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quick3deffects.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quick3deffects_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quick3dhelpers.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quick3dhelpers_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quick3diblbaker.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quick3diblbaker_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quick3dparticles.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quick3dparticles_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quick3druntimerender.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quick3druntimerender_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quick3dutils.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quick3dutils_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quick_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quickcontrols2.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quickcontrols2_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quickcontrols2impl.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quickcontrols2impl_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quickcontrolstestutilsprivate_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quickdialogs2.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quickdialogs2_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quickdialogs2quickimpl.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quickdialogs2quickimpl_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quickdialogs2utils.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quickdialogs2utils_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quicklayouts.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quicklayouts_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quickparticles_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quickshapes_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quicktemplates2.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quicktemplates2_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quicktestutilsprivate_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quicktimeline.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quicktimeline_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quickwidgets.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_quickwidgets_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_remoteobjects.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_remoteobjects_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_remoteobjectsqml.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_remoteobjectsqml_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_repparser.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_repparser_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_scxml.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_scxml_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_scxmlqml.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_scxmlqml_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_sensors.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_sensors_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_sensorsquick.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_sensorsquick_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_serialbus.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_serialbus_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_serialport.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_serialport_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_shadertools.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_shadertools_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_sql.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_sql_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_statemachine.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_statemachine_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_statemachineqml.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_statemachineqml_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_svg.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_svg_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_svgwidgets.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_svgwidgets_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_testlib.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_testlib_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_tools_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_uiplugin.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_uitools.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_uitools_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_virtualkeyboard.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_virtualkeyboard_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_webchannel.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_webchannel_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_webenginecore.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_webenginecore_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_webenginequick.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_webenginequick_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_webenginequickdelegatesqml.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_webenginequickdelegatesqml_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_webenginewidgets.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_webenginewidgets_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_websockets.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_websockets_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_webview.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_webview_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_webviewquick.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_webviewquick_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_widgets.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_widgets_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_xml.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/modules/qt_lib_xml_private.pri /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/qt_functions.prf /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/qt_config.prf /Users/cubik65536/Qt/6.2.4/macos/mkspecs/macx-g++/qmake.conf /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/spec_post.prf .qmake.stash /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/exclusive_builds.prf /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/mac/sdk.prf /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/toolchain.prf /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/mac/toolchain.prf /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/default_pre.prf /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/mac/default_pre.prf /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/resolve_config.prf /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/default_post.prf /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/mac/default_post.prf /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/mac/objective_c.prf /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/mac/mac.prf /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/warn_on.prf /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/qmake_use.prf /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/file_copies.prf /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/mac/rez.prf /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/mac/asset_catalogs.prf /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/testcase_targets.prf /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/exceptions.prf /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/yacc.prf /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/lex.prf SlopeCraft.pro $(DISTDIR)/
-
-sub-BlockListManager-distdir: FORCE
-	@test -d BlockListManager/ || mkdir -p BlockListManager/
-	cd BlockListManager/ && ( test -e Makefile || $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/BlockListManager/BlockListManager.pro -spec macx-g++ ) && $(MAKE) -e -f Makefile distdir DISTDIR=$(DISTDIR)/BlockListManager
 
 sub-SlopeCraftL-distdir: FORCE
 	@test -d SlopeCraftL/ || mkdir -p SlopeCraftL/
 	cd SlopeCraftL/ && ( test -e Makefile || $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/SlopeCraftL/SlopeCraftL.pro -spec macx-g++ ) && $(MAKE) -e -f Makefile distdir DISTDIR=$(DISTDIR)/SlopeCraftL
+
+sub-BlockListManager-distdir: FORCE
+	@test -d BlockListManager/ || mkdir -p BlockListManager/
+	cd BlockListManager/ && ( test -e Makefile || $(QMAKE) -o Makefile /Volumes/Software\ Development/SlopeCraft-for-macOS/BlockListManager/BlockListManager.pro -spec macx-g++ ) && $(MAKE) -e -f Makefile distdir DISTDIR=$(DISTDIR)/BlockListManager
 
 sub-SlopeCraftMain-distdir: FORCE
 	@test -d SlopeCraftMain/ || mkdir -p SlopeCraftMain/
