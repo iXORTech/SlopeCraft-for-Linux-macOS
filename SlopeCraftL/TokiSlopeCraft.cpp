@@ -28,16 +28,13 @@ const Eigen::Array<float, 2, 3> TokiSlopeCraft::DitherMapLR = {{0.0 / 16.0, 0.0 
 const Eigen::Array<float, 2, 3> TokiSlopeCraft::DitherMapRL = {{7.0 / 16.0, 0.0 / 16.0, 0.0 / 16.0},
                                                                {1.0 / 16.0, 5.0 / 16.0, 3.0 / 16.0}};
 
-const ColorSet TokiSlopeCraft::Basic(SlopeCraft::RGBBasicSource);
+const ConstColorSet TokiSlopeCraft::Basic(SlopeCraft::RGBBasicSource);
 ColorSet TokiSlopeCraft::Allowed(0);
 
 gameVersion TokiSlopeCraft::mcVer; // 12,13,14,15,16,17
 mapTypes TokiSlopeCraft::mapType;
 std::vector<simpleBlock> TokiSlopeCraft::blockPalette(0);
 
-bool readFromTokiColor(const std::string &FileName, ColorList &M);
-bool readFromTokiColor(const char *src, ColorList &M);
-uchar h2d(char h);
 void crash();
 
 void matchColor(uint32_t taskCount, TokiColor **tk, ARGB *argb);
@@ -50,7 +47,7 @@ TokiSlopeCraft::TokiSlopeCraft()
     glassBuilder = new PrimGlassBuilder;
     Compressor = new LossyCompressor;
 #ifdef SLOPECRAFTL_WITH_AICVETR
-    AiCvter = AiConverterInterface::create();
+    GAConverter = new GACvter::GAConverter;
 #endif
     setProgressRangeSet([](void *, int, int, int) {});
     setProgressAdd([](void *, int) {});
@@ -76,7 +73,7 @@ TokiSlopeCraft::~TokiSlopeCraft()
     delete Compressor;
     delete glassBuilder;
 #ifdef SLOPECRAFTL_WITH_AICVETR
-    AiCvter->destroy();
+    delete GAConverter;
 #endif
 }
 
@@ -85,7 +82,7 @@ void TokiSlopeCraft::setWindPtr(void *_w)
 {
     wind = _w;
 #ifdef SLOPECRAFTL_WITH_AICVETR
-    AiCvter->setUiPtr(_w);
+    GAConverter->setUiPtr(_w);
 #endif
 }
 /// a function ptr to show progress of converting and exporting
@@ -93,7 +90,7 @@ void TokiSlopeCraft::setProgressRangeSet(void (*prs)(void *, int, int, int))
 {
     progressRangeSet = prs;
 #ifdef SLOPECRAFTL_WITH_AICVETR
-    AiCvter->setProgressRangeFun(prs);
+    GAConverter->setProgressRangeFun(prs);
 #endif
 }
 /// a function ptr to add progress value
@@ -101,7 +98,7 @@ void TokiSlopeCraft::setProgressAdd(void (*pa)(void *, int))
 {
     progressAdd = pa;
 #ifdef SLOPECRAFTL_WITH_AICVETR
-    AiCvter->setProgressAddFun(pa);
+    GAConverter->setProgressAddFun(pa);
 #endif
 }
 /// a function ptr to prevent window from being syncoped
@@ -515,12 +512,11 @@ bool TokiSlopeCraft::setType(mapTypes type,
 }
 
 #ifdef SLOPECRAFTL_WITH_AICVETR
-void TokiSlopeCraft::configAiCvter()
+void TokiSlopeCraft::configGAConverter()
 {
-    AiCvter->loadColorSheet(Allowed._RGB.data(),
-                            Allowed.Map.data(),
-                            Allowed.Map.size());
-    AiCvter->loadImage(rawImage.data(), rawImage.rows(), rawImage.cols());
+    GACvter::updateMapColor2GrayLUT();
+
+    GAConverter->setRawImage(rawImage);
 }
 #endif
 
@@ -558,7 +554,7 @@ void TokiSlopeCraft::setRawImage(const EImage &_rawimg)
     rawImage = _rawimg;
     kernelStep = convertionReady;
 #ifdef SLOPECRAFTL_WITH_AICVETR
-    configAiCvter();
+    configGAConverter();
 #endif
     return;
 }
@@ -594,38 +590,48 @@ void TokiSlopeCraft::getARGB32(ARGB *dest) const
 
 bool TokiSlopeCraft::convert(convertAlgo algo, bool dither)
 {
-    if (kernelStep < convertionReady)
-    {
+    if (kernelStep < convertionReady) {
         reportError(wind, errorFlag::HASTY_MANIPULATION,
                     "You can call convert only after you imported the raw image");
         return false;
     }
 
-    if (algo == convertAlgo::AiCvter)
+
+    if (algo == convertAlgo::GACvter)
     {
 #ifdef SLOPECRAFTL_WITH_AICVETR
+
         convertAlgo algos[6] = {RGB, RGB_Better, HSV, Lab94, Lab00, XYZ};
-        std::array<const uint8_t *, 6> seed;
         Eigen::ArrayXX<uint8_t> CvtedMap[6];
-        for (int a = 0; a < 6; a++)
-        {
+        std::vector<const Eigen::ArrayXX<uint8_t> *> seeds(6);
+        for (int a = 0; a < 6; a++) {
             this->convert(algos[a]);
             CvtedMap[a].resize(getImageRows(), getImageCols());
             this->getConvertedMap(nullptr, nullptr, CvtedMap[a].data());
-            seed[a] = CvtedMap[a].data();
+            seeds[a] =& CvtedMap[a];
         }
 
-        AiCvter->setCrossoverProb(AiOpt.crossoverProb);
-        AiCvter->setMutatteProb(AiOpt.mutationProb);
-        AiCvter->setMaxGeneration(AiOpt.maxGeneration);
-        AiCvter->setMaxFailTime(AiOpt.maxFailTimes);
-        AiCvter->setPopSize(AiOpt.popSize);
-        AiCvter->setSeed(seed.data(), seed.size());
 
-        AiCvter->run();
+
+        {
+            heu::GAOption opt;
+            opt.crossoverProb=AiOpt.crossoverProb;
+            opt.mutateProb=AiOpt.mutationProb;
+            opt.maxGenerations=AiOpt.maxGeneration;
+            opt.maxFailTimes=AiOpt.maxFailTimes;
+            opt.populationSize=AiOpt.popSize;
+            GAConverter->setOption(opt);
+        }
+
+        GAConverter->setSeeds(seeds);
+
+
+        GAConverter->run();
+
 
         // replace raw image with ai result
-        AiCvter->resultImage(rawImage.data());
+        GAConverter->resultImage(&rawImage);
+
 
         algo = convertAlgo::RGB_Better;
 
@@ -792,20 +798,20 @@ void TokiSlopeCraft::Dither()
     {
     case 'R':
     case 'r':
-        ColorMap = &Basic._RGB;
+        ColorMap = &Allowed._RGB;
         CvtFun = RGB2ARGB;
         break;
     case 'H':
-        ColorMap = &Basic.HSV;
+        ColorMap = &Allowed.HSV;
         CvtFun = HSV2ARGB;
         break;
     case 'L':
     case 'l':
-        ColorMap = &Basic.Lab;
+        ColorMap = &Allowed.Lab;
         CvtFun = Lab2ARGB;
         break;
     default:
-        ColorMap = &Basic.XYZ;
+        ColorMap = &Allowed.XYZ;
         CvtFun = XYZ2ARGB;
         break;
     }
@@ -915,12 +921,7 @@ void TokiSlopeCraft::Dither()
     cerr << "Inserted " << newCount << " colors to hash\n";
 }
 
-#ifdef WITH_QT
-void matchColor(TokiColor *tColor, ARGB qColor)
-{
-    tColor->apply(qColor);
-}
-#else
+
 void matchColor(uint32_t taskCount, TokiColor **tk, ARGB *argb)
 {
     for (uint32_t i = 0; i < taskCount; i++)
@@ -928,7 +929,7 @@ void matchColor(uint32_t taskCount, TokiColor **tk, ARGB *argb)
         tk[i]->apply(argb[i]);
     }
 }
-#endif
+
 
 void TokiSlopeCraft::getTokiColorPtr(uint16_t col, const TokiColor **dst) const
 {
@@ -966,7 +967,7 @@ TokiSlopeCraft::ColorSpace TokiSlopeCraft::getColorSpace() const
         return L;
     case XYZ:
         return X;
-    case convertAlgo::AiCvter:
+    case convertAlgo::GACvter:
         return R;
     }
     return R;
@@ -1356,7 +1357,7 @@ void TokiSlopeCraft::makeHeight_new()
     for (uint16_t c = 0; c < sizePic(1); c++)
     {
 
-        cerr << "Coloumn " << c << '\n';
+        //cerr << "Coloumn " << c << '\n';
         HeightLine HL;
         // getTokiColorPtr(c,&src[0]);
         HL.make(mapPic.col(c), allowNaturalCompress);
@@ -1697,35 +1698,35 @@ std::string TokiSlopeCraft::exportAsLitematic(const std::string &TargetName,
     reportWorkingStatue(wind, workStatues::writingMetaInfo);
     progressRangeSet(wind, 0, 100 + Build.size(), 0);
     NBT::NBTWriter Lite;
-    cerr << __FILE__ << " , " << __LINE__ << endl;
+
     std::string unCompressed = TargetName + ".TokiNoBug";
     Lite.open(unCompressed.data());
-    cerr << __FILE__ << " , " << __LINE__ << endl;
+
     Lite.writeCompound("Metadata");
-    cerr << __FILE__ << " , " << __LINE__ << endl;
+
     Lite.writeCompound("EnclosingSize");
-    cerr << __FILE__ << " , " << __LINE__ << endl;
+
     Lite.writeInt("x", size3D[0]);
     Lite.writeInt("y", size3D[1]);
     Lite.writeInt("z", size3D[2]);
     Lite.endCompound();
-    cerr << __FILE__ << " , " << __LINE__ << endl;
+
     Lite.writeString("Author", author.data());
-    cerr << __FILE__ << " , " << __LINE__ << endl;
+
     static const std::string Description = "This litematic is generated by SlopeCraft " + std::string(Kernel::getSCLVersion()) + ", developed by TokiNoBug";
     Lite.writeString("Description", Description.data());
     Lite.writeString("Name", LiteName.data());
-    cerr << __FILE__ << " , " << __LINE__ << endl;
+
     Lite.writeInt("RegionCount", 1);
-    cerr << __FILE__ << " , " << __LINE__ << endl;
+
     Lite.writeLong("TimeCreated", 114514);
     Lite.writeLong("TimeModified", 1919810);
-    cerr << __FILE__ << " , " << __LINE__ << endl;
+
     Lite.writeInt("TotalBlocks", this->getBlockCounts());
     Lite.writeInt("TotalVolume", Build.size());
-    cerr << __FILE__ << " , " << __LINE__ << endl;
+
     Lite.endCompound();
-    cerr << __FILE__ << " , " << __LINE__ << endl;
+
     progressRangeSet(wind, 0, 100 + Build.size(), 50);
     Lite.writeCompound("Regions");
     Lite.writeCompound(RegionName.data());
@@ -1734,13 +1735,13 @@ std::string TokiSlopeCraft::exportAsLitematic(const std::string &TargetName,
     Lite.writeInt("y", 0);
     Lite.writeInt("z", 0);
     Lite.endCompound();
-    cerr << __FILE__ << " , " << __LINE__ << endl;
+
     Lite.writeCompound("Size");
     Lite.writeInt("x", size3D[0]);
     Lite.writeInt("y", size3D[1]);
     Lite.writeInt("z", size3D[2]);
     Lite.endCompound();
-    cerr << __FILE__ << " , " << __LINE__ << endl;
+
     progressRangeSet(wind, 0, 100 + Build.size(), 100);
 
     reportWorkingStatue(wind, workStatues::writingBlockPalette);
@@ -1801,7 +1802,7 @@ std::string TokiSlopeCraft::exportAsLitematic(const std::string &TargetName,
             Lite.writeLongDirectly("id", HackyVal);
     }
     Lite.endCompound();
-    cerr << __FILE__ << " , " << __LINE__ << endl;
+
     Lite.endCompound();
     switch (mcVer)
     {
@@ -1824,9 +1825,9 @@ std::string TokiSlopeCraft::exportAsLitematic(const std::string &TargetName,
         break;
     }
 
-    cerr << __FILE__ << " , " << __LINE__ << endl;
+
     Lite.close();
-    cerr << __FILE__ << " , " << __LINE__ << endl;
+
 
     reportWorkingStatue(wind, workStatues::none);
 
@@ -1836,7 +1837,7 @@ std::string TokiSlopeCraft::exportAsLitematic(const std::string &TargetName,
         reportError(wind, errorFlag::FAILED_TO_COMPRESS, msg.data());
         return unCompressed;
     }
-    cerr << __FILE__ << " , " << __LINE__ << endl;
+
 
     if (std::remove(unCompressed.data()) != 0)
     {
@@ -1851,12 +1852,12 @@ std::string TokiSlopeCraft::exportAsLitematic(const std::string &TargetName,
 void TokiSlopeCraft::exportAsStructure(const char *TargetName,
                                        char *FileName) const
 {
-    // cerr<<__FILE__<<" , "<<__LINE__<<endl;
+
     std::string temp = exportAsStructure(TargetName);
-    // cerr<<__FILE__<<" , "<<__LINE__<<endl;
+
     if (FileName != nullptr)
         std::strcpy(temp.data(), FileName);
-    // cerr<<__FILE__<<" , "<<__LINE__<<endl;
+
 }
 
 std::string TokiSlopeCraft::exportAsStructure(const std::string &TargetName) const
@@ -1867,14 +1868,14 @@ std::string TokiSlopeCraft::exportAsStructure(const std::string &TargetName) con
                     "You can only export a map to structure after you build the 3D structure.");
         return "Too hasty! export structure after you built!";
     }
-    // cerr<<__FILE__<<" , "<<__LINE__<<endl;
+
     reportWorkingStatue(wind, workStatues::writingMetaInfo);
     progressRangeSet(wind, 0, 100 + Build.size(), 0);
     NBT::NBTWriter file;
-    // cerr<<__FILE__<<" , "<<__LINE__<<endl;
+
     std::string unCompress = TargetName + ".TokiNoBug";
     file.open(unCompress.data());
-    // cerr<<__FILE__<<" , "<<__LINE__<<endl;
+
     file.writeListHead("entities", NBT::idByte, 0);
     file.writeListHead("size", NBT::idInt, 3);
     file.writeInt("This should never be shown", size3D[0]);
@@ -1913,7 +1914,7 @@ std::string TokiSlopeCraft::exportAsStructure(const std::string &TargetName) con
 
     reportWorkingStatue(wind, workStatues::writing3D);
 
-    // cerr<<__FILE__<<" , "<<__LINE__<<endl;
+
     file.writeListHead("blocks", NBT::idCompound, BlockCount);
     for (int x = 0; x < size3D[0]; x++)
         for (int y = 0; y < size3D[1]; y++)
@@ -1949,10 +1950,10 @@ std::string TokiSlopeCraft::exportAsStructure(const std::string &TargetName) con
         break;
     }
 
-    // cerr<<__FILE__<<" , "<<__LINE__<<endl;
+
     file.close();
 
-    // cerr<<__FILE__<<" , "<<__LINE__<<endl;
+
     progressRangeSet(wind, 0, 100, 100);
     reportWorkingStatue(wind, workStatues::none);
 
@@ -1962,7 +1963,7 @@ std::string TokiSlopeCraft::exportAsStructure(const std::string &TargetName) con
         reportError(wind, errorFlag::FAILED_TO_COMPRESS, msg.data());
         return unCompress;
     }
-    // cerr<<__FILE__<<" , "<<__LINE__<<endl;
+
 
     if (std::remove(unCompress.data()) != 0)
     {
@@ -1971,7 +1972,7 @@ std::string TokiSlopeCraft::exportAsStructure(const std::string &TargetName) con
         return unCompress;
     }
 
-    // cerr<<__FILE__<<" , "<<__LINE__<<endl;
+
     return "";
 }
 

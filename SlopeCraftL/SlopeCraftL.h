@@ -104,12 +104,6 @@ extern "C"
 #ifndef SLOPECRAFTL_CAPI
 namespace SlopeCraft
 {
-
-    void *SCL_EXPORT AllowedRGBList4AiCvters();
-    void *SCL_EXPORT AllowedMapList4AiCvters();
-
-    void *SCL_EXPORT BasicalRGBList4AiCvters();
-
     class SCL_EXPORT AbstractBlock
     {
     public:
@@ -216,7 +210,8 @@ namespace SlopeCraft
         Lab00 = 'L',
         /// naive XYZ formula
         XYZ = 'X',
-        AiCvter = 'A'
+        /// Genetic Algorithm
+        GACvter = 'A'
     };
     enum compressSettings
     {

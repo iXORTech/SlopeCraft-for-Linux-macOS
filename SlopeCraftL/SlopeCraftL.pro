@@ -59,7 +59,7 @@ LIBS += -lz
 
 #Comment following lines if you compile without AiConverter
 #LIBS += D:\Git\build-SlopeCraft-Desktop_Qt_6_1_0_MinGW_64_bit-Release\SlopeCraftL\release\AiCvterLib3.dll
-#DEFINES += SLOPECRAFTL_WITH_AICVETR
+DEFINES += SLOPECRAFTL_WITH_AICVETR
 
 SOURCES += \
     AiCvterOpt.cpp \
@@ -86,10 +86,10 @@ HEADERS += \
     NBTWriter.h \
     OptiChain.h \
     PrimGlassBuilder.h \
+    SCLDefines.h \
     TokiColor.h \
     TokiSlopeCraft.h \
     WaterItem.h \
-    defines.h \
     lossyCompressor.h \
     object_pool.hpp \
     simpleBlock.h \
@@ -103,3 +103,16 @@ HEADERS += \
 #!isEmpty(target.path): INSTALLS += target
 
 
+
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../GAConverter/release/ -lGAConverter
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../GAConverter/debug/ -lGAConverter
+else:unix: LIBS += -L$$OUT_PWD/../GAConverter/ -lGAConverter
+
+INCLUDEPATH += $$PWD/../GAConverter
+DEPENDPATH += $$PWD/../GAConverter
+
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../GAConverter/release/libGAConverter.a
+else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../GAConverter/debug/libGAConverter.a
+else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../GAConverter/release/GAConverter.lib
+else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../GAConverter/debug/GAConverter.lib
+else:unix: PRE_TARGETDEPS += $$OUT_PWD/../GAConverter/libGAConverter.a
