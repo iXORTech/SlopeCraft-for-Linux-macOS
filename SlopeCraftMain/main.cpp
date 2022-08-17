@@ -28,6 +28,10 @@ This file is part of SlopeCraft.
 
 int main(int argc, char *argv[])
 {
+
+    //SlopeCraft::SCL_testHSV();
+
+
     QApplication a(argc, argv);
 
     QTranslator translator;

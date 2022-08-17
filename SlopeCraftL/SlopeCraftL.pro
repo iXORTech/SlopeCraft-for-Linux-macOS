@@ -30,7 +30,7 @@ DESTDIR = $$COMMON_LIB_DIR
 
 RC_LANG = 0x0004
 
-VERSION += 3.8.1.0
+VERSION += 3.9.0.0
 
 QMAKE_TARGET_DESCRIPTION = SlopeCraft Library# (with AiConverter)
 #描述信息
@@ -57,8 +57,6 @@ LIBS += -lz
 #LIBS += D:\CppLibs\zlib\lib\libzlibstatic.a
 #LIBS += -lz
 
-#Comment following lines if you compile without AiConverter
-#LIBS += D:\Git\build-SlopeCraft-Desktop_Qt_6_1_0_MinGW_64_bit-Release\SlopeCraftL\release\AiCvterLib3.dll
 DEFINES += SLOPECRAFTL_WITH_AICVETR
 
 SOURCES += \
