@@ -1,8 +1,8 @@
 QMAKE_MAC_SDK.macosx.Path = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk
 QMAKE_MAC_SDK.macosx.PlatformPath = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform
 QMAKE_MAC_SDK.macosx.SDKVersion = 12.3
-QMAKE_MAC_SDK.macx-g++.macosx.QMAKE_CC =/usr/local/Cellar/gcc/11.3.0_1/bin/gcc-11
-QMAKE_MAC_SDK.macx-g++.macosx.QMAKE_CXX = /usr/local/Cellar/gcc/11.3.0_1/bin/g++-11
+QMAKE_MAC_SDK.macx-g++.macosx.QMAKE_CC =/usr/local/Cellar/gcc/11.3.0_2/bin/gcc-11
+QMAKE_MAC_SDK.macx-g++.macosx.QMAKE_CXX = /usr/local/Cellar/gcc/11.3.0_2/bin/g++-11
 QMAKE_MAC_SDK.macx-g++.macosx.QMAKE_FIX_RPATH = \
     /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/install_name_tool \
     -id
@@ -12,11 +12,11 @@ QMAKE_MAC_SDK.macx-g++.macosx.QMAKE_AR = \
 QMAKE_MAC_SDK.macx-g++.macosx.QMAKE_RANLIB = \
     /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib \
     -s
-QMAKE_MAC_SDK.macx-g++.macosx.QMAKE_LINK = /usr/local/Cellar/gcc/11.3.0_1/bin/g++-11
-QMAKE_MAC_SDK.macx-g++.macosx.QMAKE_LINK_SHLIB = /usr/local/Cellar/gcc/11.3.0_1/bin/g++-11
+QMAKE_MAC_SDK.macx-g++.macosx.QMAKE_LINK = /usr/local/Cellar/gcc/11.3.0_2/bin/g++-11
+QMAKE_MAC_SDK.macx-g++.macosx.QMAKE_LINK_SHLIB = /usr/local/Cellar/gcc/11.3.0_2/bin/g++-11
 QMAKE_MAC_SDK.macx-g++.macosx.QMAKE_ACTOOL = /Applications/Xcode.app/Contents/Developer/usr/bin/actool
-QMAKE_MAC_SDK.macx-g++.macosx.QMAKE_LINK_C =/usr/local/Cellar/gcc/11.3.0_1/bin/gcc-11
-QMAKE_MAC_SDK.macx-g++.macosx.QMAKE_LINK_C_SHLIB =/usr/local/Cellar/gcc/11.3.0_1/bin/gcc-11
+QMAKE_MAC_SDK.macx-g++.macosx.QMAKE_LINK_C =/usr/local/Cellar/gcc/11.3.0_2/bin/gcc-11
+QMAKE_MAC_SDK.macx-g++.macosx.QMAKE_LINK_C_SHLIB =/usr/local/Cellar/gcc/11.3.0_2/bin/gcc-11
 QMAKE_CXX.QT_COMPILER_STDCXX = 199711L
 QMAKE_CXX.QMAKE_APPLE_CC = 6000
 QMAKE_CXX.QMAKE_APPLE_CLANG_MAJOR_VERSION = 13

@@ -12,8 +12,8 @@ EQ            = =
 
 ####### Compiler, tools and options
 
-CC            = /usr/local/Cellar/gcc/11.3.0_1/bin/gcc-11
-CXX           = /usr/local/Cellar/gcc/11.3.0_1/bin/g++-11
+CC            = /usr/local/Cellar/gcc/11.3.0_2/bin/gcc-11
+CXX           = /usr/local/Cellar/gcc/11.3.0_2/bin/g++-11
 DEFINES       = -DSLOPECRAFTL_LIBRARY
 CFLAGS        = -pipe -O2 -fPIC $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -mmacosx-version-min=10.14 -Wall -Wextra $(DEFINES)
 CXXFLAGS      = -pipe -fpermissive -fopenmp -O2 -fPIC -std=gnu++1z $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -mmacosx-version-min=10.14 -Wall -Wextra $(DEFINES)

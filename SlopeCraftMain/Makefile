@@ -12,8 +12,8 @@ EQ            = =
 
 ####### Compiler, tools and options
 
-CC            = /usr/local/Cellar/gcc/11.3.0_1/bin/gcc-11
-CXX           = /usr/local/Cellar/gcc/11.3.0_1/bin/g++-11
+CC            = /usr/local/Cellar/gcc/11.3.0_2/bin/gcc-11
+CXX           = /usr/local/Cellar/gcc/11.3.0_2/bin/g++-11
 DEFINES       = -DQT_DISABLE_DEPRECATED_BEFORE=0x060000 -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CONCURRENT_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -mmacosx-version-min=10.14 -Wall -Wextra -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -fpermissive -O2 -std=gnu++1z $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -mmacosx-version-min=10.14 -Wall -Wextra -fPIC $(DEFINES)
@@ -38,7 +38,7 @@ TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = SlopeCraft3.8.1.0
 DISTDIR = /Volumes/Software\ Development/SlopeCraft-for-macOS/SlopeCraftMain/.tmp/SlopeCraft3.8.1.0
-LINK          = /usr/local/Cellar/gcc/11.3.0_1/bin/g++-11
+LINK          = /usr/local/Cellar/gcc/11.3.0_2/bin/g++-11
 LFLAGS        = -headerpad_max_install_names $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -mmacosx-version-min=10.14 -Wl,-rpath,@executable_path/../Frameworks -Wl,-rpath,/Users/cubik65536/Qt/6.2.4/macos/lib
 LIBS          = $(SUBLIBS) -F/Users/cubik65536/Qt/6.2.4/macos/lib ../lib/libSlopeCraftL.a -lz -fopenmp -framework QtWidgets -framework QtGui -framework AppKit -framework ImageIO -framework Metal -framework QtConcurrent -framework QtNetwork -framework QtCore -framework DiskArbitration -framework IOKit -framework AGL -framework OpenGL   
 AR            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar cq
