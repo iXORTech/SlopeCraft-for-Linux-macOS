@@ -3,9 +3,10 @@
 #include "SlopeCraftL.h"
 #include "SCLDefines.h"
 
-#ifndef SLOPECRAFTL_CAPI
+#ifndef SCL_CAPI
 namespace SlopeCraft{
 #endif
+
 
 struct AiCvterOpt
 {
@@ -17,7 +18,7 @@ struct AiCvterOpt
     double mutationProb;
 };
 
-#ifndef SLOPECRAFTL_CAPI
+#ifndef SCL_CAPI
 }   //  namespace SlopeCraft
 #endif
 

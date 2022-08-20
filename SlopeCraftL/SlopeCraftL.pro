@@ -1,11 +1,14 @@
 CONFIG -= qt
 
+TEMPLATE = lib
+CONFIG += shared
+CONFIG += c++17
 
 include('../common.pri')
 
 #INCLUDEPATH += \
 #                               ../AiCvterInterface \
-#
+#                               ../GAConverter \
 #                               D:\CppLibs\HeuristicFlow-1.5.0
 
 CONFIG += staticlib
@@ -13,6 +16,7 @@ CONFIG += staticlib
 unix {
     INCLUDEPATH += \
                     ../AiCvterInterface \
+                    ../GAConverter \
                     $$HEURISTIC_FLOW_INCLUDE
     CONFIG += link_pkgconfig create_pc
     PKGCONFIG += zlib eigen3
@@ -21,6 +25,7 @@ unix {
 win32 {
     INCLUDEPATH += \
                 ../AiCvterInterface \
+                ../GAConverter \
                 $$ZLIB_INCLUDE \
                 $$EIGEN_INCLUDE \
                 $$HEURISTIC_FLOW_INCLUDE
@@ -45,30 +50,28 @@ QMAKE_TARGET_INTERNALNAME = SlopeCraftL
 
 QMAKE_CXXFLAGS += -fopenmp
 
-LIBS += -fopenmp
+LIBS += -fopenmp -lz
 
-TEMPLATE = lib
 DEFINES += SLOPECRAFTL_LIBRARY
 
-CONFIG += c++17
 
 LIBS += -lz
 
 #LIBS += D:\CppLibs\zlib\lib\libzlibstatic.a
 #LIBS += -lz
 
-DEFINES += SLOPECRAFTL_WITH_AICVETR
 
 SOURCES += \
     AiCvterOpt.cpp \
     CIEDE00.cpp \
     ColorSource.cpp \
     HeightLine.cpp \
-    NBTWriter.cpp \
     OptiChain.cpp \
     PrimGlassBuilder.cpp \
     SlopeCraftL_CAPI.cpp \
     TokiSlopeCraft.cpp \
+    TokiSlopeCraft_build.cpp \
+    TokiSlopeCraft_convert.cpp \
     WaterItem.cpp \
     colorset.cpp \
     imagePreprocess.cpp \
@@ -81,7 +84,7 @@ HEADERS += \
     AiCvterOpt.h \
     ColorSet.h \
     HeightLine.h \
-    NBTWriter.h \
+    newNBTWriter.hpp \
     OptiChain.h \
     PrimGlassBuilder.h \
     SCLDefines.h \
@@ -92,7 +95,8 @@ HEADERS += \
     object_pool.hpp \
     simpleBlock.h \
     SlopeCraftL.h \
-    SlopeCraftL_global.h
+    SlopeCraftL_global.h \
+    defines_of_extern_classes.h
 
 # Default rules for deployment.
 #unix {

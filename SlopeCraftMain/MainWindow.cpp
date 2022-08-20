@@ -77,7 +77,7 @@ MainWindow::MainWindow(QWidget *parent)
 
   proTracker = nullptr;
 
-  ProductDir = "";
+  ProductDir="";
 
   Manager = new BlockListManager(
       (QHBoxLayout *)ui->scrollAreaWidgetContents->layout());
@@ -273,7 +273,7 @@ void MainWindow::showPreview() {
     ib = preWind->BlockCount.erase(ib);
     iS = preWind->Src.erase(iS);
   }
-  kernel->get3DSize(preWind->size[0], preWind->size[1], preWind->size[2]);
+  kernel->get3DSize(&preWind->size[0], &preWind->size[1], &preWind->size[2]);
 
   qDebug() << "去重后有：" << preWind->Src.size() << "个元素";
   // preWind->Water=Blocks[12][0];
@@ -281,7 +281,7 @@ void MainWindow::showPreview() {
   // preWind->Src[1]=Blocks[1][0];preWind->BlockCount[1]=1919810;
   EImage tempE;
   tempE.resize(kernel->getImageRows(), kernel->getImageCols());
-  short a, b;
+  int a, b;
   kernel->getConvertedImage(&a, &b, tempE.data());
   // cerr<<__FILE__<<" , "<<__LINE__<<endl;
   QImage temp = EImage2QImage(tempE);
@@ -549,7 +549,7 @@ void MainWindow::InitializeAll() {
   if (!Collected) {
     loadBlockList();
     qDebug("方块列表加载完毕");
-    Manager->setVersion(SlopeCraft::MC17);
+    Manager->setVersion(SlopeCraft::gameVersion::MC17);
     onPresetsClicked();
     Collected = true;
   }
@@ -697,11 +697,11 @@ void MainWindow::updateEnables() {
   temp = kernel->queryStep() >= SlopeCraft::step::wait4Image;
   ui->actionTestBlockList->setEnabled(temp);
 
-  temp = kernel->queryStep() >= SlopeCraft::convertionReady;
+  temp = kernel->queryStep() >= SlopeCraft::step::convertionReady;
   ui->ShowRaw->setEnabled(temp);
   // ui->Convert->setEnabled(temp);
 
-  temp = kernel->queryStep() >= SlopeCraft::converted;
+  temp = kernel->queryStep() >= SlopeCraft::step::converted;
   ui->ShowAdjed->setEnabled(temp);
   ui->ExportData->setEnabled(temp);
   ui->progressEx->setEnabled(temp);
@@ -711,7 +711,7 @@ void MainWindow::updateEnables() {
   ui->actionExportData->setEnabled(temp);
 
   temp = (!ui->isMapCreative->isChecked()) &&
-         kernel->queryStep() >= SlopeCraft::converted;
+         kernel->queryStep() >= SlopeCraft::step::converted;
   ui->ExLite->setEnabled(temp);
   ui->progressExLite->setEnabled(temp);
   ui->actionExportLite->setEnabled(temp);
@@ -721,7 +721,7 @@ void MainWindow::updateEnables() {
   ui->actionExportNBT->setEnabled(temp);
   ui->Build4Lite->setEnabled(temp);
 
-  temp = kernel->queryStep() >= SlopeCraft::builded;
+  temp = kernel->queryStep() >= SlopeCraft::step::builded;
   ui->ExportLite->setEnabled(temp);
   ui->ManualPreview->setEnabled(temp);
   ui->ExportFlatDiagram->setEnabled(temp && (kernel->isFlat()));
@@ -794,7 +794,7 @@ void MainWindow::preprocessImage(const QString &Path) {
   ui->ShowRawPic->setPixmap(QPixmap::fromImage(rawPic));
   ui->ShowPic->setPixmap(QPixmap::fromImage(rawPic));
 
-  kernel->decreaseStep(SlopeCraft::nothing);
+  kernel->decreaseStep(SlopeCraft::step::nothing);
   updateEnables();
 }
 
@@ -939,7 +939,7 @@ void MainWindow::onGameVerClicked() {
   if (ui->isGame19->isChecked()) {
     Manager->setVersion(19);
   }
-  kernel->decreaseStep(SlopeCraft::nothing);
+  kernel->decreaseStep(SlopeCraft::step::nothing);
   onBlockListChanged();
   updateEnables();
 }
@@ -958,14 +958,14 @@ void MainWindow::onMapTypeClicked() {
   if(ui->isMapWall->isChecked()) {
       Manager->setEnabled(12,false);
   }*/
-  kernel->decreaseStep(SlopeCraft::nothing);
+  kernel->decreaseStep(SlopeCraft::step::nothing);
   onBlockListChanged();
   updateEnables();
 }
 
 void MainWindow::ChangeToCustom() {
   ui->isBLCustom->setChecked(true);
-  kernel->decreaseStep(SlopeCraft::nothing);
+  kernel->decreaseStep(SlopeCraft::step::nothing);
   updateEnables();
 }
 
@@ -986,7 +986,7 @@ void MainWindow::onPresetsClicked() {
   if (ui->isMapSurvival->isChecked())
     Manager->setEnabled(12, false);
 
-  kernel->decreaseStep(SlopeCraft::nothing);
+  kernel->decreaseStep(SlopeCraft::step::nothing);
   updateEnables();
 }
 
@@ -1010,9 +1010,9 @@ void MainWindow::onAlgoClicked() {
   if (ui->isColorSpaceXYZ->isChecked())
     now = SlopeCraft::convertAlgo::XYZ;
   if (ui->isColorSpaceAi->isChecked())
-    now = SlopeCraft::convertAlgo::GACvter;
+    now = SlopeCraft::convertAlgo::gaCvter;
 
-  if (lastChoice == SlopeCraft::convertAlgo::GACvter)
+  if (lastChoice == SlopeCraft::convertAlgo::gaCvter)
     kernelSetImg();
 
   if (lastChoice != now || lastDither != nowDither)
@@ -1147,17 +1147,17 @@ void MainWindow::algoProgressAdd(void *p, int deltaVal) {
 }
 
 void MainWindow::on_Convert_clicked() {
-  if (kernel->queryStep() < SlopeCraft::wait4Image) {
+  if (kernel->queryStep() < SlopeCraft::step::wait4Image) {
     qDebug("重新setType");
     onBlockListChanged();
-    if (kernel->queryStep() < SlopeCraft::wait4Image)
+    if (kernel->queryStep() < SlopeCraft::step::wait4Image)
       return;
   }
 
-  if (kernel->queryStep() < SlopeCraft::convertionReady) {
+  if (kernel->queryStep() < SlopeCraft::step::convertionReady) {
     qDebug("重新setImage");
     kernelSetImg();
-    if (kernel->queryStep() < SlopeCraft::convertionReady)
+    if (kernel->queryStep() < SlopeCraft::step::convertionReady)
       return;
   }
 
@@ -1177,7 +1177,7 @@ void MainWindow::on_Convert_clicked() {
     if (ui->isColorSpaceXYZ->isChecked())
       now = SlopeCraft::convertAlgo::XYZ;
     if (ui->isColorSpaceAi->isChecked())
-      now = SlopeCraft::convertAlgo::GACvter;
+      now = SlopeCraft::convertAlgo::gaCvter;
   }
 
   proTracker = ui->ShowProgressABbar;
@@ -1223,7 +1223,7 @@ void MainWindow::on_ShowRaw_clicked() {
 
 void MainWindow::on_ShowAdjed_clicked() {
   EImage ei(kernel->getImageRows(), kernel->getImageCols());
-  short a, b;
+  int a, b;
   kernel->getConvertedImage(&a, &b, ei.data());
   ui->ShowPic->setPixmap(QPixmap::fromImage(EImage2QImage(ei)));
 }
@@ -1494,7 +1494,7 @@ void MainWindow::on_Build4Lite_clicked() {
 
   bool allowBridge = ui->allowGlassBridge->isChecked();
   SlopeCraft::glassBridgeSettings gBS =
-      allowBridge ? SlopeCraft::withBridge : SlopeCraft::noBridge;
+      allowBridge ? SlopeCraft::glassBridgeSettings::withBridge : SlopeCraft::glassBridgeSettings::noBridge;
 
   kernel->decreaseStep(SlopeCraft::step::converted);
   ui->ExportLite->setEnabled(false);
@@ -1509,7 +1509,7 @@ void MainWindow::on_Build4Lite_clicked() {
 
   int size3D[3], total;
 
-  kernel->get3DSize(size3D[0], size3D[1], size3D[2]);
+  kernel->get3DSize(&size3D[0], &size3D[1], &size3D[2]);
   total = kernel->getBlockCounts();
   ui->ShowLiteBlocks->setText(QString::number(total));
   ui->ShowLiteXYZ->setText(QString::fromStdString(
@@ -1531,7 +1531,7 @@ void MainWindow::onExportLiteclicked(QString path) {
   if (path.isEmpty()) {
     FileName = QFileDialog::getSaveFileName(
                    this, tr("导出为投影/结构方块文件"), "",
-                   tr("投影文件(*.litematic) ;; 结构方块文件(*.nbt)"))
+                   tr("投影文件(*.litematic) ;; 结构方块文件(*.nbt);;WorldEdit原理图(*.schem)"))
                    .toLocal8Bit()
                    .data();
   } else {
@@ -1541,12 +1541,14 @@ void MainWindow::onExportLiteclicked(QString path) {
   char unCbuf[512] = "";
   if (FileName.empty())
     return;
-  bool putLitematic = (FileName.substr(FileName.length() -
+  const bool putLitematic = (FileName.substr(FileName.length() -
                                        strlen(".litematic")) == ".litematic");
-  bool putStructure =
+  const bool putStructure =
       (FileName.substr(FileName.length() - strlen(".nbt")) == ".nbt");
+  const bool putWESchem=
+          (FileName.substr(FileName.length() - strlen(".schem")) == ".schem");
 
-  if (!putLitematic && !putStructure) {
+  if (!putLitematic && !putStructure&&!putWESchem) {
     qDebug("得到的文件路径有错！");
     return;
   }
@@ -1561,14 +1563,48 @@ void MainWindow::onExportLiteclicked(QString path) {
 
   if (putStructure)
     kernel->exportAsStructure(FileName.data(), unCbuf);
-  else
+  else if(putLitematic)
     kernel->exportAsLitematic(
-        FileName.data(), ui->InputLiteName->toPlainText().toUtf8().data(),
-        ui->InputAuthor->toPlainText().toUtf8().data(),
-        (ui->InputRegionName->toPlainText() + tr("(xz坐标=-65±128×整数)"))
+        FileName.data(), ui->InputLiteName->text().toUtf8().data(),
+        (ui->InputRegionName->text() + tr("(xz坐标=-65±128×整数)"))
             .toUtf8()
             .data(),
         unCbuf);
+
+  else {
+      int offset[3]={0,0,0},weOffset[3]={0,0,0};
+      QString dependModsListString=ui->schem_required_mods->toPlainText();
+      QStringList modList=dependModsListString.split('\n');
+
+      std::vector<std::string> stdStrList(modList.size());
+      std::vector<const char*> charPtrs;
+      for(int idx=0;idx<int(stdStrList.size());idx++) {
+          stdStrList[idx]=modList[idx].toUtf8().data();
+          charPtrs.emplace_back(stdStrList[idx].data());
+      }
+
+      const std::array<const QLineEdit*,3> offsetSrc
+              ({ui->schem_offsetX,ui->schem_offsetY,ui->schem_offsetZ});
+      const std::array<const QLineEdit*,3> weOffsetSrc
+              ({ui->schem_weOffsetX,ui->schem_weOffsetY,ui->schem_weOffsetZ});
+
+      for(int d=0;d<3;d++) {
+          bool ok=true;
+          int result=offsetSrc[d]->text().toInt(&ok);
+          if(ok)
+              offset[d]=result;
+
+          result=weOffsetSrc[d]->text().toInt(&ok);
+          if(ok)
+              weOffset[d]=result;
+      }
+
+      kernel->exportAsWESchem(FileName.data(),
+                              offset,weOffset,
+                              ui->schem_name->text().toUtf8().data(),
+                              charPtrs.data(),charPtrs.size(),unCbuf);
+  }
+
   // unCompressed=unCbuf;
   if (std::strlen(unCbuf) <= 0) {
     qDebug("压缩成功");
@@ -1708,10 +1744,13 @@ void MainWindow::on_allowGlassBridge_stateChanged(int arg1) {
   ui->glassBridgeInterval->setEnabled(arg1);
 }
 
-void MainWindow::showError(void *p, SlopeCraft::errorFlag error, const char *) {
+void MainWindow::showError(void *p, SlopeCraft::errorFlag error, const char * msg) {
   MainWindow *wind = (MainWindow *)p;
   QString title, text;
   bool isFatal = false;
+
+  const QString detail=(msg==nullptr)?(""):(tr("\n具体信息：")+QString::fromStdString(msg));
+
   switch (error) {
   case SlopeCraft::errorFlag::NO_ERROR_OCCUR:
     return;
@@ -1769,15 +1808,15 @@ void MainWindow::showError(void *p, SlopeCraft::errorFlag error, const char *) {
     text = tr("这可能是因为路径中含有中文字符！");
     break;
   case SlopeCraft::errorFlag::FAILED_TO_REMOVE:
-    title = tr("导出时删除临时文件失败");
+    title = tr("删除临时文件失败");
     text = tr("这可能是因为路径中含有中文字符！");
     break;
   }
   if (isFatal)
-    QMessageBox::warning(wind, title, text, QMessageBox::StandardButton::Ok,
+    QMessageBox::warning(wind, title, text+detail, QMessageBox::StandardButton::Ok,
                          QMessageBox::StandardButton::NoButton);
   else {
-    QMessageBox::critical(wind, title, text,
+    QMessageBox::critical(wind, title, text+detail,
                           QMessageBox::StandardButton::Close);
     emit wind->ui->Exit->clicked();
   }

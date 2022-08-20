@@ -23,12 +23,19 @@ This file is part of SlopeCraft.
 #ifndef SCLDEFINES_H
 #define SCLDEFINES_H
 
+#ifndef _USE_MATH_DEFINES
+    #define _USE_MATH_DEFINES
+#endif
+
 //#include <omp.h>
 
 #define EIGEN_NO_DEBUG
 #include <Eigen/Dense>
 #include <iostream>
+
 #include "SlopeCraftL.h"
+#include "defines_of_extern_classes.h"
+
 
 #ifndef M_PI
 #define M_PI		3.14159265358979323846
