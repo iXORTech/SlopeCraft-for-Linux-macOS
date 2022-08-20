@@ -11,7 +11,7 @@ include('../common.pri')
 #                               ../GAConverter \
 #                               D:\CppLibs\HeuristicFlow-1.5.0
 
-CONFIG += staticlib
+CONFIG += sharedlib
 
 unix {
     INCLUDEPATH += \
