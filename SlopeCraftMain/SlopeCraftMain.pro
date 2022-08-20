@@ -98,7 +98,7 @@ unix {
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../BlockListManager/release/ -lBlockListManager
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../BlockListManager/debug/ -lBlockListManager
-else:unix: LIBS += -L$$OUT_PWD/../BlockListManager/ -lBlockListManager
+else:unix: LIBS += -L$$OUT_PWD/../lib/ -lBlockListManager
 
 INCLUDEPATH += $$PWD/../BlockListManager
 DEPENDPATH += $$PWD/../BlockListManager
@@ -107,12 +107,12 @@ win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../BlockLi
 else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../BlockListManager/debug/libBlockListManager.a
 else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../BlockListManager/release/BlockListManager.lib
 else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../BlockListManager/debug/BlockListManager.lib
-else:unix: PRE_TARGETDEPS += $$OUT_PWD/../BlockListManager/libBlockListManager.a
+else:unix: PRE_TARGETDEPS += $$OUT_PWD/../lib/libBlockListManager.a
 
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../SlopeCraftL/release/ -lSlopeCraftL3
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../SlopeCraftL/debug/ -lSlopeCraftL3
-else:unix: LIBS += -L$$OUT_PWD/../SlopeCraftL/ -lSlopeCraftL3
+else:unix: LIBS += -L$$OUT_PWD/../lib/ -lSlopeCraftL
 
 INCLUDEPATH += $$PWD/../SlopeCraftL
 DEPENDPATH += $$PWD/../SlopeCraftL

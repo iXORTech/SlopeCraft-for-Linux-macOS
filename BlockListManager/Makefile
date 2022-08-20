@@ -279,7 +279,7 @@ DIST          = /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/spec_pre.prf \
 		/Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/qt_config.prf \
 		/Users/cubik65536/Qt/6.2.4/macos/mkspecs/macx-g++/qmake.conf \
 		/Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/spec_post.prf \
-		.qmake.stash \
+		../.qmake.stash \
 		/Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/exclusive_builds.prf \
 		/Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/mac/sdk.prf \
 		/Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/toolchain.prf \
@@ -557,7 +557,7 @@ Makefile: BlockListManager.pro /Users/cubik65536/Qt/6.2.4/macos/mkspecs/macx-g++
 		/Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/qt_config.prf \
 		/Users/cubik65536/Qt/6.2.4/macos/mkspecs/macx-g++/qmake.conf \
 		/Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/spec_post.prf \
-		.qmake.stash \
+		../.qmake.stash \
 		/Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/exclusive_builds.prf \
 		/Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/mac/sdk.prf \
 		/Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/toolchain.prf \
@@ -810,7 +810,7 @@ Makefile: BlockListManager.pro /Users/cubik65536/Qt/6.2.4/macos/mkspecs/macx-g++
 /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/qt_config.prf:
 /Users/cubik65536/Qt/6.2.4/macos/mkspecs/macx-g++/qmake.conf:
 /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/spec_post.prf:
-.qmake.stash:
+../.qmake.stash:
 /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/exclusive_builds.prf:
 /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/mac/sdk.prf:
 /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/toolchain.prf:
@@ -869,7 +869,6 @@ clean: compiler_clean
 
 distclean: clean 
 	-$(DEL_FILE) ../lib/$(TARGET) 
-	-$(DEL_FILE) .qmake.stash
 	-$(DEL_FILE) Makefile
 
 
@@ -904,6 +903,7 @@ moc_BlockListManager.cpp: BlockListManager.h \
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/qradiobutton.h \
 		../SlopeCraftL/SlopeCraftL.h \
 		../SlopeCraftL/SlopeCraftL_global.h \
+		../SlopeCraftL/defines_of_extern_classes.h \
 		TokiBlock.h \
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers/QString \
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers/qstring.h \
@@ -949,6 +949,7 @@ moc_TokiBaseColor.cpp: TokiBaseColor.h \
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/qmessagebox.h \
 		../SlopeCraftL/SlopeCraftL.h \
 		../SlopeCraftL/SlopeCraftL_global.h \
+		../SlopeCraftL/defines_of_extern_classes.h \
 		/Users/cubik65536/Qt/6.2.4/macos/libexec/moc
 	/Users/cubik65536/Qt/6.2.4/macos/libexec/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -D__cplusplus=199711L -D__APPLE_CC__=6000 -D__clang__ -D__clang_major__=13 -D__clang_minor__=1 -D__clang_patchlevel__=6 -D__GNUC__=4 -D__GNUC_MINOR__=2 -D__GNUC_PATCHLEVEL__=1 -I/Users/cubik65536/Qt/6.2.4/macos/mkspecs/macx-g++ -I'/Volumes/Software Development/SlopeCraft-for-macOS/BlockListManager' -I'/Volumes/Software Development/SlopeCraft-for-macOS/SlopeCraftL' -I'/Volumes/Software Development/SlopeCraft-for-macOS/SlopeCraftL' -I/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers -I/Users/cubik65536/Qt/6.2.4/macos/lib/QtGui.framework/Headers -I/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers -I/usr/local/Cellar/gcc/11.3.0_1/include/c++/11 -I/usr/local/Cellar/gcc/11.3.0_1/include/c++/11/x86_64-apple-darwin21 -I/usr/local/Cellar/gcc/11.3.0_1/include/c++/11/backward -I/usr/local/Cellar/gcc/11.3.0_1/lib/gcc/11/gcc/x86_64-apple-darwin21/11/include -I/usr/local/Cellar/gcc/11.3.0_1/lib/gcc/11/gcc/x86_64-apple-darwin21/11/include-fixed -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -F/Users/cubik65536/Qt/6.2.4/macos/lib TokiBaseColor.h -o moc_TokiBaseColor.cpp
 
@@ -967,6 +968,7 @@ moc_TokiBlock.cpp: TokiBlock.h \
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/qmessagebox.h \
 		../SlopeCraftL/SlopeCraftL.h \
 		../SlopeCraftL/SlopeCraftL_global.h \
+		../SlopeCraftL/defines_of_extern_classes.h \
 		/Users/cubik65536/Qt/6.2.4/macos/libexec/moc
 	/Users/cubik65536/Qt/6.2.4/macos/libexec/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -D__cplusplus=199711L -D__APPLE_CC__=6000 -D__clang__ -D__clang_major__=13 -D__clang_minor__=1 -D__clang_patchlevel__=6 -D__GNUC__=4 -D__GNUC_MINOR__=2 -D__GNUC_PATCHLEVEL__=1 -I/Users/cubik65536/Qt/6.2.4/macos/mkspecs/macx-g++ -I'/Volumes/Software Development/SlopeCraft-for-macOS/BlockListManager' -I'/Volumes/Software Development/SlopeCraft-for-macOS/SlopeCraftL' -I'/Volumes/Software Development/SlopeCraft-for-macOS/SlopeCraftL' -I/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers -I/Users/cubik65536/Qt/6.2.4/macos/lib/QtGui.framework/Headers -I/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers -I/usr/local/Cellar/gcc/11.3.0_1/include/c++/11 -I/usr/local/Cellar/gcc/11.3.0_1/include/c++/11/x86_64-apple-darwin21 -I/usr/local/Cellar/gcc/11.3.0_1/include/c++/11/backward -I/usr/local/Cellar/gcc/11.3.0_1/lib/gcc/11/gcc/x86_64-apple-darwin21/11/include -I/usr/local/Cellar/gcc/11.3.0_1/lib/gcc/11/gcc/x86_64-apple-darwin21/11/include-fixed -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -F/Users/cubik65536/Qt/6.2.4/macos/lib TokiBlock.h -o moc_TokiBlock.cpp
 
@@ -1003,6 +1005,7 @@ BlockListManager.o: BlockListManager.cpp /Users/cubik65536/Qt/6.2.4/macos/lib/Qt
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/qradiobutton.h \
 		../SlopeCraftL/SlopeCraftL.h \
 		../SlopeCraftL/SlopeCraftL_global.h \
+		../SlopeCraftL/defines_of_extern_classes.h \
 		TokiBlock.h \
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers/QString \
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtCore.framework/Headers/qstring.h \
@@ -1046,7 +1049,8 @@ TokiBaseColor.o: TokiBaseColor.cpp TokiBaseColor.h \
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/QMessageBox \
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/qmessagebox.h \
 		../SlopeCraftL/SlopeCraftL.h \
-		../SlopeCraftL/SlopeCraftL_global.h
+		../SlopeCraftL/SlopeCraftL_global.h \
+		../SlopeCraftL/defines_of_extern_classes.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o TokiBaseColor.o TokiBaseColor.cpp
 
 TokiBlock.o: TokiBlock.cpp TokiBlock.h \
@@ -1063,7 +1067,8 @@ TokiBlock.o: TokiBlock.cpp TokiBlock.h \
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/QMessageBox \
 		/Users/cubik65536/Qt/6.2.4/macos/lib/QtWidgets.framework/Headers/qmessagebox.h \
 		../SlopeCraftL/SlopeCraftL.h \
-		../SlopeCraftL/SlopeCraftL_global.h
+		../SlopeCraftL/SlopeCraftL_global.h \
+		../SlopeCraftL/defines_of_extern_classes.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o TokiBlock.o TokiBlock.cpp
 
 moc_BlockListManager.o: moc_BlockListManager.cpp 

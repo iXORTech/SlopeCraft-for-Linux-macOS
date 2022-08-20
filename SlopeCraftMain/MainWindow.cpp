@@ -1928,8 +1928,7 @@ void MainWindow::grabVersion(bool isAuto) {
   }
   isRunning = true;
 
-  static const QString url =
-      "https://api.github.com/repos/TokiNoBug/SlopeCraft/releases";
+  static const QString url="https://api.github.com/repos/iXORTech/SlopeCraft-for-macOS/releases";
 
   QEventLoop tempLoop;
   QNetworkAccessManager *manager = new QNetworkAccessManager;
@@ -1965,7 +1964,6 @@ void MainWindow::grabVersion(bool isAuto) {
     return;
   }
 
-  static const QString url="https://api.github.com/repos/iXORTech/SlopeCraft-for-macOS/releases";
   QJsonArray ja = jd.array();
 
   bool hasKey = ja.first().toObject().contains("tag_name");
