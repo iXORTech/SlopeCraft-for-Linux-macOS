@@ -14,10 +14,10 @@ EQ            = =
 
 CC            = /usr/local/Cellar/gcc/11.3.0_2/bin/gcc-11
 CXX           = /usr/local/Cellar/gcc/11.3.0_2/bin/g++-11
-DEFINES       = -DSLOPECRAFTL_LIBRARY
+DEFINES       = -DSLOPECRAFTL_LIBRARY -DSLOPECRAFTL_WITH_AICVETR
 CFLAGS        = -pipe -O2 -fPIC $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -mmacosx-version-min=10.14 -Wall -Wextra $(DEFINES)
 CXXFLAGS      = -pipe -fpermissive -fopenmp -O2 -fPIC -std=gnu++1z $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -mmacosx-version-min=10.14 -Wall -Wextra $(DEFINES)
-INCPATH       = -I. -I../AiCvterInterface -I../HeuristicFlow-1.5.0 -I/usr/local/Cellar/eigen/3.4.0_1/include/eigen3 -I/Users/cubik65536/Qt/6.2.4/macos/mkspecs/macx-g++
+INCPATH       = -I. -I../AiCvterInterface -I../HeuristicFlow-1.6.2.1 -I../GAConverter -I/usr/local/Cellar/eigen/3.4.0_1/include/eigen3 -I/Users/cubik65536/Qt/6.2.4/macos/mkspecs/macx-g++
 QMAKE         = /Users/cubik65536/Qt/6.2.4/macos/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -36,8 +36,8 @@ DEL_DIR       = rmdir
 MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
-DISTNAME      = SlopeCraftL3.8.1.0
-DISTDIR = /Volumes/Software\ Development/SlopeCraft-for-macOS/SlopeCraftL/.tmp/SlopeCraftL3.8.1.0
+DISTNAME      = SlopeCraftL3.9.0.0
+DISTDIR = /Volumes/Software\ Development/SlopeCraft-for-macOS/SlopeCraftL/.tmp/SlopeCraftL3.9.0.0
 AR            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar cq
 RANLIB        = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib -s
 SED           = sed
@@ -329,10 +329,10 @@ DIST          = /Users/cubik65536/Qt/6.2.4/macos/mkspecs/features/spec_pre.prf \
 		NBTWriter.h \
 		OptiChain.h \
 		PrimGlassBuilder.h \
+		SCLDefines.h \
 		TokiColor.h \
 		TokiSlopeCraft.h \
 		WaterItem.h \
-		defines.h \
 		lossyCompressor.h \
 		object_pool.hpp \
 		simpleBlock.h \
@@ -370,7 +370,7 @@ first: all
 
 staticlib: ../lib/$(TARGET)
 
-../lib/libSlopeCraftL.a:  $(OBJECTS) $(OBJCOMP) 
+../lib/libSlopeCraftL.a: /Volumes/Software\ Development/SlopeCraft-for-macOS/SlopeCraftL/../GAConverter/libGAConverter.a $(OBJECTS) $(OBJCOMP) 
 	@test -d ../lib/ || mkdir -p ../lib/
 	-$(DEL_FILE) ../lib/$(TARGET)
 	$(AR) $(DESTDIR)$(TARGET) $(OBJECTS)
@@ -917,7 +917,7 @@ compiler_clean:
 AiCvterOpt.o: AiCvterOpt.cpp AiCvterOpt.h \
 		SlopeCraftL.h \
 		SlopeCraftL_global.h \
-		defines.h \
+		SCLDefines.h \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/Dense \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/Core \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -1162,7 +1162,7 @@ AiCvterOpt.o: AiCvterOpt.cpp AiCvterOpt.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o AiCvterOpt.o AiCvterOpt.cpp
 
 CIEDE00.o: CIEDE00.cpp TokiColor.h \
-		defines.h \
+		SCLDefines.h \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/Dense \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/Core \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -1408,7 +1408,7 @@ CIEDE00.o: CIEDE00.cpp TokiColor.h \
 		SlopeCraftL_global.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o CIEDE00.o CIEDE00.cpp
 
-ColorSource.o: ColorSource.cpp defines.h \
+ColorSource.o: ColorSource.cpp SCLDefines.h \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/Dense \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/Core \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -1655,7 +1655,7 @@ ColorSource.o: ColorSource.cpp defines.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ColorSource.o ColorSource.cpp
 
 HeightLine.o: HeightLine.cpp HeightLine.h \
-		defines.h \
+		SCLDefines.h \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/Dense \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/Core \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -1906,7 +1906,7 @@ HeightLine.o: HeightLine.cpp HeightLine.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o HeightLine.o HeightLine.cpp
 
 NBTWriter.o: NBTWriter.cpp NBTWriter.h \
-		defines.h \
+		SCLDefines.h \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/Dense \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/Core \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -2153,7 +2153,7 @@ NBTWriter.o: NBTWriter.cpp NBTWriter.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o NBTWriter.o NBTWriter.cpp
 
 OptiChain.o: OptiChain.cpp OptiChain.h \
-		defines.h \
+		SCLDefines.h \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/Dense \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/Core \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -2401,7 +2401,7 @@ OptiChain.o: OptiChain.cpp OptiChain.h \
 
 PrimGlassBuilder.o: PrimGlassBuilder.cpp PrimGlassBuilder.h \
 		object_pool.hpp \
-		defines.h \
+		SCLDefines.h \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/Dense \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/Core \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -2755,7 +2755,7 @@ PrimGlassBuilder.o: PrimGlassBuilder.cpp PrimGlassBuilder.h \
 SlopeCraftL_CAPI.o: SlopeCraftL_CAPI.cpp SlopeCraftL.h \
 		SlopeCraftL_global.h \
 		simpleBlock.h \
-		defines.h \
+		SCLDefines.h \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/Dense \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/Core \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -3110,11 +3110,58 @@ SlopeCraftL_CAPI.o: SlopeCraftL_CAPI.cpp SlopeCraftL.h \
 		HeightLine.h \
 		OptiChain.h \
 		NBTWriter.h \
-		AiCvterOpt.h
+		AiCvterOpt.h \
+		../GAConverter/GAConverter.h \
+		../GAConverter/GACvterDefines.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/Global \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/Threading.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/InternalHeaderCheck.h \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/FunBody.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/Enumerations.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/Types.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/Constants.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/TemplateFloat.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/HeuMaths.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/Randoms.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/Macros.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/ConvertDoubleAndBinCode.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/Genetic \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/GAOption.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/InternalHeaderCheck.h \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/DefaultGeneType.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/EAGlobal \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/Pareto.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/InternalHeaderCheck.h \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/SizeBody4BoxConstraint.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/BoxConstraint.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/testFunctionsCommon.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/SOFunctions.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/MOFunctions.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/TestFunctions.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/GAAbstract.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/GABase.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/SOGASelecters.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/SOGA.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/MOGAAbstract.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/MOGABase.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/NSGA2.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/NSGABase.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/NSGA3.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/NSGA3Base.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/NSGA3Abstract.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/Miscellaneous4GA.hpp \
+		../GAConverter/sortColor.h \
+		../GAConverter/uiPack.h \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/SimpleMatrix \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/SimpleMatrix/MatrixBase.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/SimpleMatrix/InternalHeaderCheck.h \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/SimpleMatrix/MatrixFixedSize.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/SimpleMatrix/MatrixDynamicSize.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/SimpleMatrix/MatrixMap.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SlopeCraftL_CAPI.o SlopeCraftL_CAPI.cpp
 
 TokiSlopeCraft.o: TokiSlopeCraft.cpp TokiSlopeCraft.h \
-		defines.h \
+		SCLDefines.h \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/Dense \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/Core \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -3471,14 +3518,61 @@ TokiSlopeCraft.o: TokiSlopeCraft.cpp TokiSlopeCraft.h \
 		HeightLine.h \
 		OptiChain.h \
 		NBTWriter.h \
-		AiCvterOpt.h
+		AiCvterOpt.h \
+		../GAConverter/GAConverter.h \
+		../GAConverter/GACvterDefines.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/Global \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/Threading.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/InternalHeaderCheck.h \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/FunBody.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/Enumerations.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/Types.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/Constants.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/TemplateFloat.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/HeuMaths.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/Randoms.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/Macros.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/ConvertDoubleAndBinCode.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/Genetic \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/GAOption.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/InternalHeaderCheck.h \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/DefaultGeneType.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/EAGlobal \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/Pareto.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/InternalHeaderCheck.h \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/SizeBody4BoxConstraint.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/BoxConstraint.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/testFunctionsCommon.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/SOFunctions.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/MOFunctions.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/TestFunctions.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/GAAbstract.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/GABase.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/SOGASelecters.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/SOGA.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/MOGAAbstract.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/MOGABase.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/NSGA2.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/NSGABase.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/NSGA3.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/NSGA3Base.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/NSGA3Abstract.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/Miscellaneous4GA.hpp \
+		../GAConverter/sortColor.h \
+		../GAConverter/uiPack.h \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/SimpleMatrix \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/SimpleMatrix/MatrixBase.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/SimpleMatrix/InternalHeaderCheck.h \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/SimpleMatrix/MatrixFixedSize.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/SimpleMatrix/MatrixDynamicSize.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/SimpleMatrix/MatrixMap.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o TokiSlopeCraft.o TokiSlopeCraft.cpp
 
 WaterItem.o: WaterItem.cpp WaterItem.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o WaterItem.o WaterItem.cpp
 
 colorset.o: colorset.cpp ColorSet.h \
-		defines.h \
+		SCLDefines.h \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/Dense \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/Core \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -3835,10 +3929,57 @@ colorset.o: colorset.cpp ColorSet.h \
 		HeightLine.h \
 		OptiChain.h \
 		NBTWriter.h \
-		AiCvterOpt.h
+		AiCvterOpt.h \
+		../GAConverter/GAConverter.h \
+		../GAConverter/GACvterDefines.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/Global \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/Threading.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/InternalHeaderCheck.h \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/FunBody.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/Enumerations.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/Types.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/Constants.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/TemplateFloat.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/HeuMaths.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/Randoms.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/Macros.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/ConvertDoubleAndBinCode.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/Genetic \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/GAOption.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/InternalHeaderCheck.h \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/DefaultGeneType.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/EAGlobal \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/Pareto.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/InternalHeaderCheck.h \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/SizeBody4BoxConstraint.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/BoxConstraint.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/testFunctionsCommon.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/SOFunctions.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/MOFunctions.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/TestFunctions.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/GAAbstract.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/GABase.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/SOGASelecters.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/SOGA.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/MOGAAbstract.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/MOGABase.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/NSGA2.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/NSGABase.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/NSGA3.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/NSGA3Base.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/NSGA3Abstract.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/Miscellaneous4GA.hpp \
+		../GAConverter/sortColor.h \
+		../GAConverter/uiPack.h \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/SimpleMatrix \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/SimpleMatrix/MatrixBase.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/SimpleMatrix/InternalHeaderCheck.h \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/SimpleMatrix/MatrixFixedSize.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/SimpleMatrix/MatrixDynamicSize.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/SimpleMatrix/MatrixMap.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o colorset.o colorset.cpp
 
-imagePreprocess.o: imagePreprocess.cpp defines.h \
+imagePreprocess.o: imagePreprocess.cpp SCLDefines.h \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/Dense \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/Core \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -4086,7 +4227,7 @@ imagePreprocess.o: imagePreprocess.cpp defines.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o imagePreprocess.o imagePreprocess.cpp
 
 lossyCompressor.o: lossyCompressor.cpp lossyCompressor.h \
-		defines.h \
+		SCLDefines.h \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/Dense \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/Core \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -4335,42 +4476,47 @@ lossyCompressor.o: lossyCompressor.cpp lossyCompressor.h \
 		TokiColor.h \
 		HeightLine.h \
 		OptiChain.h \
-		../HeuristicFlow-1.5.0/HeuristicFlow/Genetic \
-		../HeuristicFlow-1.5.0/HeuristicFlow/src/Genetic/GAOption.hpp \
-		../HeuristicFlow-1.5.0/HeuristicFlow/src/Genetic/InternalHeaderCheck.h \
-		../HeuristicFlow-1.5.0/HeuristicFlow/src/Genetic/GABase.hpp \
-		../HeuristicFlow-1.5.0/HeuristicFlow/Global \
-		../HeuristicFlow-1.5.0/HeuristicFlow/src/Global/Threading.hpp \
-		../HeuristicFlow-1.5.0/HeuristicFlow/src/Global/InternalHeaderCheck.h \
-		../HeuristicFlow-1.5.0/HeuristicFlow/src/Global/FunBody.hpp \
-		../HeuristicFlow-1.5.0/HeuristicFlow/src/Global/Enumerations.hpp \
-		../HeuristicFlow-1.5.0/HeuristicFlow/src/Global/Types.hpp \
-		../HeuristicFlow-1.5.0/HeuristicFlow/src/Global/Constants.hpp \
-		../HeuristicFlow-1.5.0/HeuristicFlow/src/Global/TemplateFloat.hpp \
-		../HeuristicFlow-1.5.0/HeuristicFlow/src/Global/HeuMaths.hpp \
-		../HeuristicFlow-1.5.0/HeuristicFlow/src/Global/Randoms.hpp \
-		../HeuristicFlow-1.5.0/HeuristicFlow/src/Genetic/GAAbstract.hpp \
-		../HeuristicFlow-1.5.0/HeuristicFlow/src/Genetic/SOGA.hpp \
-		../HeuristicFlow-1.5.0/HeuristicFlow/src/Genetic/MOGAAbstract.hpp \
-		../HeuristicFlow-1.5.0/HeuristicFlow/EAGlobal \
-		../HeuristicFlow-1.5.0/HeuristicFlow/src/EAGlobal/Pareto.hpp \
-		../HeuristicFlow-1.5.0/HeuristicFlow/src/EAGlobal/InternalHeaderCheck.h \
-		../HeuristicFlow-1.5.0/HeuristicFlow/src/EAGlobal/BoxInterface.hpp \
-		../HeuristicFlow-1.5.0/HeuristicFlow/src/EAGlobal/BoxRTCTDims.hpp \
-		../HeuristicFlow-1.5.0/HeuristicFlow/src/EAGlobal/BoxShapes.hpp \
-		../HeuristicFlow-1.5.0/HeuristicFlow/src/EAGlobal/BoxRTCTRange.hpp \
-		../HeuristicFlow-1.5.0/HeuristicFlow/src/EAGlobal/BoxReal.h \
-		../HeuristicFlow-1.5.0/HeuristicFlow/src/Genetic/MOGABase.hpp \
-		../HeuristicFlow-1.5.0/HeuristicFlow/src/Genetic/NSGA2.hpp \
-		../HeuristicFlow-1.5.0/HeuristicFlow/src/Genetic/NSGABase.hpp \
-		../HeuristicFlow-1.5.0/HeuristicFlow/src/Genetic/NSGA3.hpp \
-		../HeuristicFlow-1.5.0/HeuristicFlow/src/Genetic/NSGA3Base.hpp \
-		../HeuristicFlow-1.5.0/HeuristicFlow/src/Genetic/NSGA3Abstract.hpp \
-		../HeuristicFlow-1.5.0/HeuristicFlow/src/Genetic/Miscellaneous4GA.hpp
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/Genetic \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/GAOption.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/InternalHeaderCheck.h \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/DefaultGeneType.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/Global \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/Threading.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/InternalHeaderCheck.h \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/FunBody.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/Enumerations.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/Types.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/Constants.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/TemplateFloat.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/HeuMaths.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/Randoms.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/Macros.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/ConvertDoubleAndBinCode.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/EAGlobal \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/Pareto.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/InternalHeaderCheck.h \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/SizeBody4BoxConstraint.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/BoxConstraint.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/testFunctionsCommon.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/SOFunctions.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/MOFunctions.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/TestFunctions.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/GAAbstract.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/GABase.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/SOGASelecters.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/SOGA.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/MOGAAbstract.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/MOGABase.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/NSGA2.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/NSGABase.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/NSGA3.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/NSGA3Base.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/NSGA3Abstract.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/Miscellaneous4GA.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o lossyCompressor.o lossyCompressor.cpp
 
 simpleBlock.o: simpleBlock.cpp simpleBlock.h \
-		defines.h \
+		SCLDefines.h \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/Dense \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/Core \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -4617,7 +4763,7 @@ simpleBlock.o: simpleBlock.cpp simpleBlock.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o simpleBlock.o simpleBlock.cpp
 
 tokicolor.o: tokicolor.cpp ColorSet.h \
-		defines.h \
+		SCLDefines.h \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/Dense \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/Core \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -4867,7 +5013,7 @@ tokicolor.o: tokicolor.cpp ColorSet.h \
 SlopeCraftL.o: SlopeCraftL.cpp SlopeCraftL.h \
 		SlopeCraftL_global.h \
 		simpleBlock.h \
-		defines.h \
+		SCLDefines.h \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/Dense \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/Core \
 		/usr/local/Cellar/eigen/3.4.0_1/include/eigen3/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -5222,27 +5368,61 @@ SlopeCraftL.o: SlopeCraftL.cpp SlopeCraftL.h \
 		HeightLine.h \
 		OptiChain.h \
 		NBTWriter.h \
-		AiCvterOpt.h
+		AiCvterOpt.h \
+		../GAConverter/GAConverter.h \
+		../GAConverter/GACvterDefines.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/Global \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/Threading.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/InternalHeaderCheck.h \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/FunBody.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/Enumerations.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/Types.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/Constants.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/TemplateFloat.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/HeuMaths.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/Randoms.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/Macros.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Global/ConvertDoubleAndBinCode.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/Genetic \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/GAOption.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/InternalHeaderCheck.h \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/DefaultGeneType.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/EAGlobal \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/Pareto.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/InternalHeaderCheck.h \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/SizeBody4BoxConstraint.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/BoxConstraint.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/testFunctionsCommon.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/SOFunctions.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/MOFunctions.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/EAGlobal/TestFunctions.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/GAAbstract.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/GABase.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/SOGASelecters.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/SOGA.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/MOGAAbstract.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/MOGABase.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/NSGA2.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/NSGABase.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/NSGA3.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/NSGA3Base.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/NSGA3Abstract.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/Genetic/Miscellaneous4GA.hpp \
+		../GAConverter/sortColor.h \
+		../GAConverter/uiPack.h \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/SimpleMatrix \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/SimpleMatrix/MatrixBase.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/SimpleMatrix/InternalHeaderCheck.h \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/SimpleMatrix/MatrixFixedSize.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/SimpleMatrix/MatrixDynamicSize.hpp \
+		../HeuristicFlow-1.6.2.1/HeuristicFlow/src/SimpleMatrix/MatrixMap.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SlopeCraftL.o SlopeCraftL.cpp
 
 ####### Install
 
-install_target: first FORCE
-	@test -d $(INSTALL_ROOT)/usr/lib || mkdir -p $(INSTALL_ROOT)/usr/lib
-	$(QINSTALL) ../lib/$(TARGET) $(INSTALL_ROOT)/usr/lib/$(TARGET)
-	$(RANLIB) $(INSTALL_ROOT)/usr/lib/$(TARGET)
-	@test -d $(INSTALL_ROOT)/usr/lib || mkdir -p $(INSTALL_ROOT)/usr/lib
-	$(INSTALL_FILE) ../lib/SlopeCraftL.pc $(INSTALL_ROOT)/usr/lib/SlopeCraftL.pc
+install:  FORCE
 
-uninstall_target: FORCE
-	-$(DEL_FILE) $(INSTALL_ROOT)/usr/lib/$(TARGET) 
-	 -$(DEL_FILE) $(INSTALL_ROOT)/usr/lib/SlopeCraftL.pc
-	-$(DEL_DIR) $(INSTALL_ROOT)/usr/lib/ 
-
-
-install: install_target  FORCE
-
-uninstall: uninstall_target  FORCE
+uninstall:  FORCE
 
 FORCE:
 

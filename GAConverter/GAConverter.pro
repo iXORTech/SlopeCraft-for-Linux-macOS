@@ -1,12 +1,28 @@
 CONFIG -= qt
 
+include('../common.pri')
+
 TEMPLATE = lib
 CONFIG += staticlib
 
 CONFIG += c++17
 
-INCLUDEPATH += D:/CppLibs/eigen-3.4.0 \
-                               D:/CppLibs/HeuristicFlow-1.6.2.1
+# INCLUDEPATH += D:/CppLibs/eigen-3.4.0 \
+#                               D:/CppLibs/HeuristicFlow-1.6.2.1
+
+win32 {
+    INCLUDEPATH += \
+                $$EIGEN_INCLUDE \
+                $$HEURISTIC_FLOW_INCLUDE
+}
+
+unix {
+    INCLUDEPATH += \
+                $$EIGEN_INCLUDE \
+                $$HEURISTIC_FLOW_INCLUDE
+    CONFIG += link_pkgconfig
+    PKGCONFIG += eigen3
+}
 
 
 QMAKE_CXXFLAGS += -fopenmp
