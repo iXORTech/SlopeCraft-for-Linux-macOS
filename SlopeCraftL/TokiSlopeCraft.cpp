@@ -156,6 +156,7 @@ bool compressFile(const char *inputPath, const char *outputPath) {
     }
     gzclose(fout);
     return true;
+}
 
 void TokiSlopeCraft::makeTests(const AbstractBlock **src,
                                const unsigned char *baseColor, const char *dst,
