@@ -16,6 +16,7 @@ AiCvterInterface/AiConverterInterface.h
 AiCvterInterface/AiCvterLib_global.h
 *.a
 *.dll
+*.dylib
 *.qm
 
 # Build
