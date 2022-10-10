@@ -49,8 +49,10 @@ bool rewrite_png(const char *const filename,
     return false;
   }
 
-  FILE *fp = NULL;
-  fopen_s(&fp, filename, "wb");
+  FILE *fp = fopen(filename, "wb");
+
+  // FILE *fp = NULL;
+  // fopen_s(&fp, filename, "wb");
 
   if (fp == NULL) {
     png_destroy_write_struct(&png, &info);
@@ -97,8 +99,10 @@ VCL_EXPORT void test_VCL() {
 
   const char *filename = "src_ARGB64.png";
 
-  FILE *fp = NULL;
-  ::fopen_s(&fp, filename, "rb");
+  FILE *fp = fopen(filename, "rb");
+
+  // FILE *fp = NULL;
+  // ::fopen_s(&fp, filename, "rb");
 
   size_t filesize = std::filesystem::file_size(filename);
   cout << "size of png file : " << filesize << endl;
