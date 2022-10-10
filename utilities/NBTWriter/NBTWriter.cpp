@@ -31,10 +31,10 @@ bool NBTWriterBase_nocompress::open(const char *newFileName) noexcept {
     return false;
   }
 
-  // FILE *newfile = ::fopen(newFileName, "wb");
+  FILE *newfile = ::fopen(newFileName, "wb");
 
-  FILE *newfile = NULL;
-  ::fopen_s(&newfile, newFileName, "wb");
+  // FILE *newfile = NULL;
+  // ::fopen_s(&newfile, newFileName, "wb");
 
   if (newfile == NULL) {
     return false;
