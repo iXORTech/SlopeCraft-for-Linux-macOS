@@ -21,8 +21,7 @@ set(SlopeCraft_HeuristicFlow_include_dir /usr/local/lib/HeuristicFlow-1.6.2.1)
 
 
 # manage the include dir of Eigen
-# set(SlopeCraft_Eigen3_include_dir /usr/local/Cellar/eigen/3.4.0_1/include/eigen3)
-
+set(SlopeCraft_Eigen3_include_dir /usr/local/Cellar/eigen/3.4.0_1/include/eigen3)
 
 include(cmake/find_nlohmann_json.cmake)
 include(cmake/find_Eigen3.cmake)
