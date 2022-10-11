@@ -64,6 +64,7 @@ bool parse_png(
 
   uint32_t width, height;
   int bit_depth, color_type, interlace_method, compress_method, filter_method;
+  bool add_alpha = false;
 
   png_get_IHDR(png, info, &width, &height, &bit_depth, &color_type,
                &interlace_method, &compress_method, &filter_method);
@@ -79,27 +80,35 @@ bool parse_png(
     png_set_expand(png);
 
   switch (color_type) {
-  case PNG_COLOR_TYPE_GRAY:
-
+  case PNG_COLOR_TYPE_GRAY: // fixed
     png_set_gray_to_rgb(png);
+    add_alpha = true;
     cout << "PNG_COLOR_TYPE_GRAY";
     break;
-  case PNG_COLOR_TYPE_PALETTE:
+  case PNG_COLOR_TYPE_PALETTE: // fixed
+
     png_set_palette_to_rgb(png);
+    png_set_bgr(png);
+    int num_trans;
+    png_get_tRNS(png, info, NULL, &num_trans, NULL);
+    if (num_trans <= 0) {
+      add_alpha = true;
+    }
+    cout << "num_trans = " << num_trans << endl;
     cout << "PNG_COLOR_TYPE_PALETTE";
     break;
-  case PNG_COLOR_TYPE_RGB:
+  case PNG_COLOR_TYPE_RGB: // fixed
     png_set_bgr(png);
-
+    add_alpha = true;
     cout << "PNG_COLOR_TYPE_RGB";
     break;
   case PNG_COLOR_TYPE_RGB_ALPHA: // fixed
     png_set_bgr(png);
     cout << "PNG_COLOR_TYPE_RGB_ALPHA";
     break;
-  case PNG_COLOR_TYPE_GRAY_ALPHA:
+  case PNG_COLOR_TYPE_GRAY_ALPHA: // fixed
     png_set_gray_to_rgb(png);
-    png_set_swap_alpha(png);
+    // png_set_swap_alpha(png);
     cout << "PNG_COLOR_TYPE_GRAY_ALPHA";
     break;
   default:
@@ -119,16 +128,14 @@ bool parse_png(
 
   png_read_image(png, row_ptrs.data());
 
-  if (color_type == PNG_COLOR_TYPE_RGB) {
-    // add alpha to RGB, convert RGB to RGBA
+  if (add_alpha) { // add alpha manually
     for (int r = 0; r < height; r++) {
-
       uint8_t *const data = reinterpret_cast<uint8_t *>(&(*img)(r, 0));
       for (int pixel_idx = img->cols() - 1; pixel_idx > 0; pixel_idx--) {
         const uint8_t *const data_src = data + pixel_idx * 3;
         uint8_t *const data_dest = data + pixel_idx * 4;
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 2; i >= 0; i--) {
           data_dest[i] = data_src[i];
         }
         data_dest[3] = 0xFF;
