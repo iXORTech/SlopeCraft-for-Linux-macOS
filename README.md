@@ -1,3 +1,11 @@
+<h2 align="center">
+  The multiplatform verson have been moved to the official repo <a href="https://github.com/SlopeCraft/SlopeCraft">SlopeCraft/SlopeCraft</a>
+  <br/>
+  跨平台版本已被移动到官方仓库 <a href="https://github.com/SlopeCraft/SlopeCraft">SlopeCraft/SlopeCraft</a>
+</h2>
+
+------
+
 **中文** | [English](README-en.md) <!-- lang -->
 
 <h1 align="center">SlopeCraft</h1>
